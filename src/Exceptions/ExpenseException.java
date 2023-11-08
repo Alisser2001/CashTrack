@@ -1,4 +1,5 @@
 package Exceptions;
 
-public class ExpenseException {
+public class ExpenseException extends Exception{
+    public ExpenseException(){ }
 }
