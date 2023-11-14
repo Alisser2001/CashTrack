@@ -1,12 +1,22 @@
 package User;
 
 public class User {
-    private String userID;
+    private static int usersAmount = 0;
+    private int userID;
     private String name;
     private String email;
     private String password;
 
-    public String getUserID(){
+    public User(){
+        this.userID = usersAmount;
+        setUsersAmount();
+    }
+
+    private static void setUsersAmount(){
+        usersAmount += 1;
+    }
+
+    public int getUserID(){
         return this.userID;
     }
     public String getName(){
@@ -27,5 +37,11 @@ public class User {
     public boolean setPassword(String password){
         this.password = password;
         return true;
+    }
+    @Override
+    public String toString(){
+        return "{ \n UserId: " + userID + "\n" +
+                " Name: " + name + "\n" +
+                " Email: " + email + " \n}";
     }
 }

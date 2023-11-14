@@ -1,6 +1,7 @@
 package Account;
 import Account.Money.Expense;
 import Account.Money.Revenue;
+import Account.Money.TypeExpenses;
 import Exceptions.ExpenseException;
 import User.User;
 
@@ -36,19 +37,17 @@ public class Account {
         this.user = user;
     }
 
-    public Double addRevenue(Double amount, String description){
+    public void addRevenue(Double amount, String description){
         this.setBalance(amount);
         this.revenues.add(new Revenue(amount, description));
-        return this.getBalance();
     }
 
-    public Double addExpense(Double amount, String description) throws ExpenseException{
-        if(this.getBalance() < amount){
+    public void addExpense(Double amount, TypeExpenses type, String description) throws ExpenseException{
+        /*if(this.getBalance() < amount){
             throw new ExpenseException();
-        }
+        }*/
         this.setBalance(this.getBalance() - amount);
-        this.expenses.add(new Expense(amount, description));
-        return this.getBalance();
+        this.expenses.add(new Expense(amount, type, description));
     }
 
     public List<Revenue> getRevenues(){
@@ -61,9 +60,9 @@ public class Account {
 
     @Override
     public String toString(){
-        return "AccountBalance: " + balance +
-                "User: " + user +
-                "Expenses: " + expenses +
+        return "\nAccountBalance: " + balance + "\n" +
+                "User: " + user.toString() + "\n" +
+                "Expenses: " + expenses + "\n" +
                 "Revenues: " + revenues;
     }
 }
