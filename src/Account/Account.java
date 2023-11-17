@@ -72,6 +72,13 @@ public class Account implements IAccount, IAccountOps {
         return expenses;
     }
 
+    public List<TypeExpenses> getTypesExpenses() {
+        return typesExpenses;
+    }
+    public List<TypeRevenues> getTypesRevenues() {
+        return typesRevenues;
+    }
+
     @Override
     public String toString(){
         return "\nAccountBalance: " + this.getBalance() + "\n" +

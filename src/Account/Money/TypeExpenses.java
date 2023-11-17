@@ -10,4 +10,11 @@ public class TypeExpenses extends Types{
         return "ExpenseType: " + this.getType() + "\n" +
                 "Description: " + this.getDescription();
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TypeExpenses that = (TypeExpenses) o;
+        return this.getType().equals(that.getType());
+    }
 }

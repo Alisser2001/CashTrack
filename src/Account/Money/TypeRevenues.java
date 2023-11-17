@@ -10,4 +10,11 @@ public class TypeRevenues extends Types{
         return "ExpenseType: " + this.getType() + "\n" +
                 "Description: " + this.getDescription();
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TypeRevenues that = (TypeRevenues) o;
+        return this.getType().equals(that.getType());
+    }
 }

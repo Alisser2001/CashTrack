@@ -3,7 +3,9 @@ import Account.Money.TypeRevenues;
 import Exceptions.ExpenseException;
 import User.User;
 import Account.Account;
+import java.util.List;
 import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) throws ExpenseException {
         Scanner scanner = new Scanner(System.in);
@@ -29,6 +31,8 @@ public class Main {
             System.out.println("Ingrese 2 para digitar un ingreso.");
             System.out.println("Ingrese 3 para ver todos los gastos.");
             System.out.println("Ingrese 4 para ver todos los ingresos.");
+            System.out.println("Ingrese 5 para ver los gastos por categoria.");
+            System.out.println("Ingrese 6 para ver los ingresos por categoria.");
             int option = scanner.nextInt();
             if (option == 0){
                 pivot = false;
@@ -38,10 +42,10 @@ public class Main {
                 Double amount = scanner.nextDouble();
                 scanner.nextLine();
                 System.out.println("Ingrese el tipo del gasto: ");
-                String type = scanner.nextLine().toLowerCase();
+                String type = scanner.nextLine();
                 System.out.println("Ingrese la descripción del tipo: ");
                 String typeDescription = scanner.nextLine();
-                TypeExpenses typeExpense = new TypeExpenses(type, typeDescription);
+                TypeExpenses typeExpense = new TypeExpenses(type.toLowerCase(), typeDescription);
                 System.out.println("Ingrese la descripción del gasto: ");
                 String description = scanner.nextLine();
                 try{
@@ -55,21 +59,57 @@ public class Main {
                 Double amount = scanner.nextDouble();
                 scanner.nextLine();
                 System.out.println("Ingrese el tipo del ingreso: ");
-                String type = scanner.nextLine().toLowerCase();
+                String type = scanner.nextLine();
                 System.out.println("Ingrese la descripción del tipo: ");
                 String typeDescription = scanner.nextLine();
-                TypeRevenues typeRevenue = new TypeRevenues(type, typeDescription);
+                TypeRevenues typeRevenue = new TypeRevenues(type.toLowerCase(), typeDescription);
                 System.out.println("Ingrese la descripción del ingreso: ");
                 String description = scanner.nextLine();
                 account.addTransaction(amount, null, typeRevenue, description);
             }
             if (option == 3){
-                System.out.println("\nExpenses: ");
-                System.out.println(account.getExpenses());
+                System.out.println("\nExpenses: \n");
+                List<String> result = account.getExpenses().stream()
+                        .map(expense -> "\nExpenseId: " + expense.getExpenseId() + "\nAmount: " + expense.getMoney() + "\nType: " + expense.getType().getType() + "\nDescription: " + expense.getDescription())
+                        .toList();
+                System.out.println(result);
             }
             if (option == 4){
-                System.out.println("\nRevenues: ");
-                System.out.println(account.getRevenues());
+                System.out.println("\nRevenues: \n");
+                List<String> result = account.getRevenues().stream()
+                        .map(revenue -> "\nRevenueId: " + revenue.getRevenueId() + "\nAmount: " + revenue.getMoney() + "\nType: " + revenue.getType().getType() + "\nDescription: " + revenue.getDescription())
+                        .toList();
+                System.out.println(result);
+            }
+            if (option == 5){
+                System.out.println("\nTipos de Gastos: \n");
+                List<String> categories = account.getTypesExpenses().stream()
+                                .map(type -> "\nType: " + type.getType() + "\nDescription: " + type.getDescription())
+                                        .toList();
+                System.out.println(categories);
+                scanner.nextLine();
+                System.out.println("\nIngrese el nombre de la categoria que desea revisar: \n");
+                String category = scanner.nextLine();
+                List<String> result = account.getExpenses().stream()
+                        .filter(expense -> expense.getType().getType().equals(category.toLowerCase()))
+                        .map(expense -> "\nExpenseId: " + expense.getExpenseId() + "\nAmount: " + expense.getMoney() + "\nDescription: " + expense.getDescription())
+                        .toList();
+                System.out.println("\nCategory " + category + ": \n" + result);
+            }
+            if (option == 6){
+                System.out.println("\nTipos de Ingresos: \n");
+                List<String> categories = account.getTypesRevenues().stream()
+                        .map(type -> "\nType: " + type.getType() + "\nDescription: " + type.getDescription())
+                        .toList();
+                System.out.println(categories);
+                scanner.nextLine();
+                System.out.println("\nIngrese el nombre de la categoria que desea revisar: \n");
+                String category = scanner.nextLine();
+                List<String> result = account.getRevenues().stream()
+                        .filter(revenue -> revenue.getType().getType().equals(category.toLowerCase()))
+                        .map(revenue -> "\nRevenueId: " + revenue.getRevenueId() + "\nAmount: " + revenue.getMoney() + "\nDescription: " + revenue.getDescription())
+                        .toList();
+                System.out.println("\nCategory " + category + ": \n" + result);
             }
         }
     }
