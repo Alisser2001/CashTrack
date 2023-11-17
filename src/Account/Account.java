@@ -2,23 +2,30 @@ package Account;
 import Account.Money.Expense;
 import Account.Money.Revenue;
 import Account.Money.TypeExpenses;
+import Account.Money.TypeRevenues;
 import Exceptions.ExpenseException;
+import Interfaces.Account.IAccount;
+import Interfaces.Account.IAccountOps;
 import User.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Account {
+public class Account implements IAccount, IAccountOps {
     private Double balance;
     private User user;
     private List<Expense> expenses;
     private List<Revenue> revenues;
+    private List<TypeExpenses> typesExpenses;
+    private List<TypeRevenues> typesRevenues;
 
     public Account(User user){
         this.balance = 0.0;
         this.user = user;
         this.expenses = new ArrayList<>();
         this.revenues = new ArrayList<>();
+        this.typesExpenses = new ArrayList<>();
+        this.typesRevenues = new ArrayList<>();
     }
 
     public Double getBalance(){
@@ -37,15 +44,22 @@ public class Account {
         this.user = user;
     }
 
-    public void addRevenue(Double amount, String description){
-        this.setBalance(amount);
-        this.revenues.add(new Revenue(amount, description));
+    private void addRevenue(Double amount, TypeRevenues type, String description){
+        if (!typesRevenues.contains(type)){
+            typesRevenues.add(type);
+        }
+        this.setBalance(this.getBalance() + amount);
+        this.revenues.add(new Revenue(amount, type, description));
     }
 
-    public void addExpense(Double amount, TypeExpenses type, String description) throws ExpenseException{
-        /*if(this.getBalance() < amount){
-            throw new ExpenseException();
-        }*/
+    private void addExpense(Double amount, TypeExpenses type, String description) throws ExpenseException{
+        Double actualBalance = this.getBalance();
+        if(amount > actualBalance){
+            throw new ExpenseException("No se poseen fondos suficientes. Saldo: " + this.getBalance());
+        }
+        if (!typesExpenses.contains(type)){
+            this.typesExpenses.add(type);
+        }
         this.setBalance(this.getBalance() - amount);
         this.expenses.add(new Expense(amount, type, description));
     }
@@ -60,9 +74,16 @@ public class Account {
 
     @Override
     public String toString(){
-        return "\nAccountBalance: " + balance + "\n" +
-                "User: " + user.toString() + "\n" +
-                "Expenses: " + expenses + "\n" +
-                "Revenues: " + revenues;
+        return "\nAccountBalance: " + this.getBalance() + "\n" +
+                "User: " + this.getUser() + "\n" +
+                "Expenses: " + this.getExpenses() + "\n" +
+                "Revenues: " + this.getRevenues();
+    }
+    public void addTransaction(Double amount, TypeExpenses typeExpense, TypeRevenues typeRevenue, String description) throws ExpenseException {
+        if (typeExpense != null) {
+            addExpense(amount, typeExpense, description);
+        } else if (typeRevenue != null) {
+            addRevenue(amount, typeRevenue, description);
+        }
     }
 }

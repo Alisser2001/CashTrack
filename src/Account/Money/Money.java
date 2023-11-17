@@ -1,6 +1,7 @@
 package Account.Money;
+import Interfaces.Account.Money.IMoney;
 
-abstract class Money {
+abstract class Money implements IMoney {
     private Double money;
     private String description;
     private static int expenses_amount = 0;

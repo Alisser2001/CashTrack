@@ -1,7 +1,7 @@
 package Account.Money;
 
-public class TypeExpenses extends Types{
-    public TypeExpenses(String type, String description) {
+public class TypeRevenues extends Types{
+    public TypeRevenues(String type, String description) {
         this.setType(type);
         this.setDescription(description);
     }

@@ -1,6 +1,8 @@
 package Account.Money;
 
-public class Expense extends Money {
+import Interfaces.Account.Money.IExpense;
+
+public class Expense extends Money implements IExpense {
     private int expense_id;
     private TypeExpenses type;
     public Expense(Double expense, TypeExpenses type, String description){
@@ -20,6 +22,6 @@ public class Expense extends Money {
 
     @Override
     public String toString(){
-        return this.getMoney() + ": " + this.getDescription();
+        return this.getExpenseId() + ". " + this.getMoney() + " (" + this.getType() + "): " + this.getDescription();
     }
 }

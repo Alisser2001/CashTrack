@@ -1,5 +1,7 @@
 package Exceptions;
 
 public class ExpenseException extends Exception{
-    public ExpenseException(){ }
+    public ExpenseException(String message){
+        super(message);
+    }
 }
