@@ -75,9 +75,7 @@ public class Account implements IAccount, IAccountOps {
     @Override
     public String toString(){
         return "\nAccountBalance: " + this.getBalance() + "\n" +
-                "User: " + this.getUser() + "\n" +
-                "Expenses: " + this.getExpenses() + "\n" +
-                "Revenues: " + this.getRevenues();
+                "User: " + this.getUser();
     }
     public void addTransaction(Double amount, TypeExpenses typeExpense, TypeRevenues typeRevenue, String description) throws ExpenseException {
         if (typeExpense != null) {
