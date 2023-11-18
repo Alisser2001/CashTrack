@@ -2,10 +2,11 @@ package Account.Money;
 import Interfaces.Account.Money.IMoney;
 import java.time.LocalDateTime;
 
-abstract class Money implements IMoney {
+abstract class Money<T extends Types> implements IMoney<T> {
     private Double money;
     private String description;
     private LocalDateTime date_time;
+    private T type;
     private static int expenses_amount = 0;
     private static int revenues_amount = 0;
 
@@ -28,7 +29,12 @@ abstract class Money implements IMoney {
     public LocalDateTime getDateTime(){
         return date_time;
     }
-
+    public T getType() {
+        return type;
+    }
+    public void setType(T type){
+        this.type = type;
+    }
     public void setDateTime(LocalDateTime date_time){
         this.date_time = date_time;
     }

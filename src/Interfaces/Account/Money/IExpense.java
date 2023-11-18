@@ -1,6 +1,6 @@
 package Interfaces.Account.Money;
 import Account.Money.TypeExpenses;
-public interface IExpense {
+
+public interface IExpense extends IMoney<TypeExpenses>{
     int getExpenseId();
-    TypeExpenses getType();
 }

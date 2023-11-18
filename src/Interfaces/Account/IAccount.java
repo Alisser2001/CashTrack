@@ -1,8 +1,8 @@
 package Interfaces.Account;
 import User.User;
 import Account.Money.*;
-import Exceptions.ExpenseException;
 import java.util.List;
+import java.util.Map;
 
 public interface IAccount {
     Double getBalance();
@@ -11,5 +11,7 @@ public interface IAccount {
     void setUser(User user);
     List<Revenue> getRevenues();
     List<Expense> getExpenses();
+    Map<TypeExpenses, Integer> getTypesExpenses();
+    Map<TypeRevenues, Integer> getTypesRevenues();
     String toString();
 }
