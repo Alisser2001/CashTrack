@@ -7,25 +7,26 @@ import Exceptions.ExpenseException;
 import Interfaces.Account.IAccount;
 import Interfaces.Account.IAccountOps;
 import User.User;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Account implements IAccount, IAccountOps {
     private Double balance;
     private User user;
     private List<Expense> expenses;
     private List<Revenue> revenues;
-    private List<TypeExpenses> typesExpenses;
-    private List<TypeRevenues> typesRevenues;
+    private Map<TypeExpenses, Integer> typesExpenses;
+    private Map<TypeRevenues, Integer> typesRevenues;
 
     public Account(User user){
         this.balance = 0.0;
         this.user = user;
         this.expenses = new ArrayList<>();
         this.revenues = new ArrayList<>();
-        this.typesExpenses = new ArrayList<>();
-        this.typesRevenues = new ArrayList<>();
+        this.typesExpenses = new HashMap<>();
+        this.typesRevenues = new HashMap<>();
     }
 
     public Double getBalance(){
@@ -45,8 +46,10 @@ public class Account implements IAccount, IAccountOps {
     }
 
     private void addRevenue(Double amount, TypeRevenues type, String description){
-        if (!typesRevenues.contains(type)){
-            typesRevenues.add(type);
+        if (!typesRevenues.containsKey(type)){
+            typesRevenues.put(type, 1);
+        } else {
+            typesRevenues.put(type, typesRevenues.get(type) + 1);
         }
         this.setBalance(this.getBalance() + amount);
         this.revenues.add(new Revenue(amount, type, description));
@@ -57,8 +60,10 @@ public class Account implements IAccount, IAccountOps {
         if(amount > actualBalance){
             throw new ExpenseException("No se poseen fondos suficientes. Saldo: " + this.getBalance());
         }
-        if (!typesExpenses.contains(type)){
-            this.typesExpenses.add(type);
+        if (!typesExpenses.containsKey(type)){
+            typesExpenses.put(type, 1);
+        } else {
+            typesExpenses.put(type, typesExpenses.get(type) + 1);
         }
         this.setBalance(this.getBalance() - amount);
         this.expenses.add(new Expense(amount, type, description));
@@ -72,10 +77,11 @@ public class Account implements IAccount, IAccountOps {
         return expenses;
     }
 
-    public List<TypeExpenses> getTypesExpenses() {
+    public Map<TypeExpenses, Integer> getTypesExpenses() {
         return typesExpenses;
     }
-    public List<TypeRevenues> getTypesRevenues() {
+
+    public Map<TypeRevenues, Integer> getTypesRevenues() {
         return typesRevenues;
     }
 
@@ -84,7 +90,10 @@ public class Account implements IAccount, IAccountOps {
         return "\nAccountBalance: " + this.getBalance() + "\n" +
                 "User: " + this.getUser();
     }
-    public void addTransaction(Double amount, TypeExpenses typeExpense, TypeRevenues typeRevenue, String description) throws ExpenseException {
+    public void addTransaction(Double amount, TypeExpenses typeExpense, TypeRevenues typeRevenue, String description) throws ExpenseException, NullPointerException {
+        if(amount == null){
+            throw new NullPointerException("Ingrese una cantidad valida e intentelo de nuevo.");
+        }
         if (typeExpense != null) {
             addExpense(amount, typeExpense, description);
         } else if (typeRevenue != null) {

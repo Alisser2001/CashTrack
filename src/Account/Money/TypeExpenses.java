@@ -1,5 +1,7 @@
 package Account.Money;
 
+import java.util.Objects;
+
 public class TypeExpenses extends Types{
     public TypeExpenses(String type, String description) {
         this.setType(type);
@@ -16,5 +18,10 @@ public class TypeExpenses extends Types{
         if (o == null || getClass() != o.getClass()) return false;
         TypeExpenses that = (TypeExpenses) o;
         return this.getType().equals(that.getType());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getType());
     }
 }

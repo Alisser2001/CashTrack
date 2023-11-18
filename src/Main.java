@@ -32,7 +32,7 @@ public class Main {
             System.out.println("Ingrese 3 para ver todos los gastos.");
             System.out.println("Ingrese 4 para ver todos los ingresos.");
             System.out.println("Ingrese 5 para ver los gastos por categoria.");
-            System.out.println("Ingrese 6 para ver los ingresos por categoria.");
+            System.out.println("Ingrese 6 para ver los ingresos por categoria.\n");
             int option = scanner.nextInt();
             if (option == 0){
                 pivot = false;
@@ -50,7 +50,7 @@ public class Main {
                 String description = scanner.nextLine();
                 try{
                     account.addTransaction(amount, typeExpense, null, description);
-                } catch (ExpenseException e) {
+                } catch (NullPointerException | ExpenseException e){
                     System.out.println("\nError al agregar gasto: " + e.getMessage());
                 }
             }
@@ -65,28 +65,40 @@ public class Main {
                 TypeRevenues typeRevenue = new TypeRevenues(type.toLowerCase(), typeDescription);
                 System.out.println("Ingrese la descripción del ingreso: ");
                 String description = scanner.nextLine();
-                account.addTransaction(amount, null, typeRevenue, description);
+                try{
+                    account.addTransaction(amount, null, typeRevenue, description);
+                } catch (NullPointerException e){
+                    System.out.println("\nError al agregar gasto: " + e.getMessage());
+                }
             }
             if (option == 3){
-                System.out.println("\nExpenses: \n");
-                List<String> result = account.getExpenses().stream()
-                        .map(expense -> "\nExpenseId: " + expense.getExpenseId() + "\nAmount: " + expense.getMoney() + "\nType: " + expense.getType().getType() + "\nDescription: " + expense.getDescription() + "\nDateTime: " + expense.getDateTime())
-                        .toList();
-                System.out.println(result);
+                System.out.println("\nExpenses:");
+                account.getExpenses()
+                        .forEach(expense -> {
+                            System.out.println("\nExpenseId: " + expense.getExpenseId() +
+                                    "\nAmount: " + expense.getMoney() +
+                                    "\nType: " + expense.getType().getType() +
+                                    "\nDescription: " + expense.getDescription() +
+                                    "\nDateTime: " + expense.getDateTime());
+                        });
             }
             if (option == 4){
-                System.out.println("\nRevenues: \n");
-                List<String> result = account.getRevenues().stream()
-                        .map(revenue -> "\nRevenueId: " + revenue.getRevenueId() + "\nAmount: " + revenue.getMoney() + "\nType: " + revenue.getType().getType() + "\nDescription: " + revenue.getDescription() + "\nDateTime: " + revenue.getDateTime())
-                        .toList();
-                System.out.println(result);
+                System.out.println("\nRevenues:");
+                account.getRevenues()
+                        .forEach(revenue -> {
+                            System.out.println("\nRevenueId: " + revenue.getRevenueId() +
+                                    "\nAmount: " + revenue.getMoney() +
+                                    "\nType: " + revenue.getType().getType() +
+                                    "\nDescription: " + revenue.getDescription() +
+                                    "\nDateTime: " + revenue.getDateTime());
+                        });
             }
             if (option == 5){
-                System.out.println("\nTipos de Gastos: \n");
-                List<String> categories = account.getTypesExpenses().stream()
-                                .map(type -> "\nType: " + type.getType() + "\nDescription: " + type.getDescription())
-                                        .toList();
-                System.out.println(categories);
+                System.out.println("\nTipos de Gastos:");
+                account.getTypesExpenses()
+                        .forEach((key, value) -> System.out.println("\nType: " + key.getType() +
+                        "\nDescription: " + key.getDescription() +
+                        "\nTransactions: " + value));
                 scanner.nextLine();
                 System.out.println("\nIngrese el nombre de la categoria que desea revisar: \n");
                 String category = scanner.nextLine();
@@ -94,14 +106,20 @@ public class Main {
                         .filter(expense -> expense.getType().getType().equals(category.toLowerCase()))
                         .map(expense -> "\nExpenseId: " + expense.getExpenseId() + "\nAmount: " + expense.getMoney() + "\nDescription: " + expense.getDescription() + "\nDateTime: " + expense.getDateTime())
                         .toList();
-                System.out.println("\nCategory " + category + ": \n" + result);
+                if(result.isEmpty()){
+                    System.out.println("No se encontró la categoria " + category + ".");
+                }else{
+                    System.out.println("\nCategory " + category + ": \n" + result);
+                }
             }
             if (option == 6){
-                System.out.println("\nTipos de Ingresos: \n");
-                List<String> categories = account.getTypesRevenues().stream()
-                        .map(type -> "\nType: " + type.getType() + "\nDescription: " + type.getDescription())
-                        .toList();
-                System.out.println(categories);
+                System.out.println("\nTipos de Ingresos: ");
+                account.getTypesRevenues()
+                        .forEach((key, value) -> {
+                            System.out.println("\nType: " + key.getType() +
+                                    "\nDescription: " + key.getDescription() +
+                                    "\nTransactions: " + value);
+                        });
                 scanner.nextLine();
                 System.out.println("\nIngrese el nombre de la categoria que desea revisar: \n");
                 String category = scanner.nextLine();
@@ -109,7 +127,11 @@ public class Main {
                         .filter(revenue -> revenue.getType().getType().equals(category.toLowerCase()))
                         .map(revenue -> "\nRevenueId: " + revenue.getRevenueId() + "\nAmount: " + revenue.getMoney() + "\nDescription: " + revenue.getDescription() + "\nDateTime: " + revenue.getDateTime())
                         .toList();
-                System.out.println("\nCategory " + category + ": \n" + result);
+                if(result.isEmpty()){
+                    System.out.println("No se encontró la categoria " + category + ".");
+                }else{
+                    System.out.println("\nCategory " + category + ": \n" + result);
+                }
             }
         }
     }
