@@ -1,9 +1,11 @@
 package Account.Money;
 import Interfaces.Account.Money.IMoney;
+import java.time.LocalDateTime;
 
 abstract class Money implements IMoney {
     private Double money;
     private String description;
+    private LocalDateTime date_time;
     private static int expenses_amount = 0;
     private static int revenues_amount = 0;
 
@@ -21,6 +23,14 @@ abstract class Money implements IMoney {
 
     public void setDescription(String description){
         this.description = description;
+    }
+
+    public LocalDateTime getDateTime(){
+        return date_time;
+    }
+
+    public void setDateTime(LocalDateTime date_time){
+        this.date_time = date_time;
     }
 
     public static int getExpensesAmount(){

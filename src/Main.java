@@ -70,14 +70,14 @@ public class Main {
             if (option == 3){
                 System.out.println("\nExpenses: \n");
                 List<String> result = account.getExpenses().stream()
-                        .map(expense -> "\nExpenseId: " + expense.getExpenseId() + "\nAmount: " + expense.getMoney() + "\nType: " + expense.getType().getType() + "\nDescription: " + expense.getDescription())
+                        .map(expense -> "\nExpenseId: " + expense.getExpenseId() + "\nAmount: " + expense.getMoney() + "\nType: " + expense.getType().getType() + "\nDescription: " + expense.getDescription() + "\nDateTime: " + expense.getDateTime())
                         .toList();
                 System.out.println(result);
             }
             if (option == 4){
                 System.out.println("\nRevenues: \n");
                 List<String> result = account.getRevenues().stream()
-                        .map(revenue -> "\nRevenueId: " + revenue.getRevenueId() + "\nAmount: " + revenue.getMoney() + "\nType: " + revenue.getType().getType() + "\nDescription: " + revenue.getDescription())
+                        .map(revenue -> "\nRevenueId: " + revenue.getRevenueId() + "\nAmount: " + revenue.getMoney() + "\nType: " + revenue.getType().getType() + "\nDescription: " + revenue.getDescription() + "\nDateTime: " + revenue.getDateTime())
                         .toList();
                 System.out.println(result);
             }
@@ -92,7 +92,7 @@ public class Main {
                 String category = scanner.nextLine();
                 List<String> result = account.getExpenses().stream()
                         .filter(expense -> expense.getType().getType().equals(category.toLowerCase()))
-                        .map(expense -> "\nExpenseId: " + expense.getExpenseId() + "\nAmount: " + expense.getMoney() + "\nDescription: " + expense.getDescription())
+                        .map(expense -> "\nExpenseId: " + expense.getExpenseId() + "\nAmount: " + expense.getMoney() + "\nDescription: " + expense.getDescription() + "\nDateTime: " + expense.getDateTime())
                         .toList();
                 System.out.println("\nCategory " + category + ": \n" + result);
             }
@@ -107,7 +107,7 @@ public class Main {
                 String category = scanner.nextLine();
                 List<String> result = account.getRevenues().stream()
                         .filter(revenue -> revenue.getType().getType().equals(category.toLowerCase()))
-                        .map(revenue -> "\nRevenueId: " + revenue.getRevenueId() + "\nAmount: " + revenue.getMoney() + "\nDescription: " + revenue.getDescription())
+                        .map(revenue -> "\nRevenueId: " + revenue.getRevenueId() + "\nAmount: " + revenue.getMoney() + "\nDescription: " + revenue.getDescription() + "\nDateTime: " + revenue.getDateTime())
                         .toList();
                 System.out.println("\nCategory " + category + ": \n" + result);
             }

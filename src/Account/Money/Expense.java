@@ -2,6 +2,8 @@ package Account.Money;
 
 import Interfaces.Account.Money.IExpense;
 
+import java.time.LocalDateTime;
+
 public class Expense extends Money implements IExpense {
     private int expense_id;
     private TypeExpenses type;
@@ -9,6 +11,7 @@ public class Expense extends Money implements IExpense {
         this.setMoney(expense);
         this.setDescription(description);
         this.type = type;
+        this.setDateTime(LocalDateTime.now());
         this.expense_id = Money.getExpensesAmount();
         Money.updateExpensesAmount();
     }
