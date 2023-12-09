@@ -5,7 +5,7 @@ import interfaces.dao.IAccountDAO;
 
 public class AccountDAO implements IAccountDAO {
 
-    @Override
+    /*@Override
     public AccountDTO findById(int id) {
 
     }
@@ -17,5 +17,5 @@ public class AccountDAO implements IAccountDAO {
     }
     public void deleteAccount(int id) {
 
-    }
+    }*/
 }

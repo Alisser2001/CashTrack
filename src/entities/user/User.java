@@ -1,29 +1,35 @@
 package entities.user;
 
-public class User {
-    private static int usersAmount = 0;
-    private int userID;
-    private String name;
+import interfaces.entities.user.IUser;
+
+public class User implements IUser {
+    private int id;
+    private String username;
     private String email;
     private String password;
 
-    public User(){
-        this.userID = usersAmount;
-        setUsersAmount();
+    public User(){ }
+    public User(String username){
+        this.username = username;
     }
-
-    private static void setUsersAmount(){
-        usersAmount += 1;
+    public User(int id, String username){
+        this.id = id;
+        this.username = username;
+    }
+    public User(int id, String username, String email){
+        this.id = id;
+        this.username = username;
+        this.email = email;
     }
 
     public int getUserID(){
-        return this.userID;
+        return this.id;
     }
-    public String getName(){
-        return name;
+    public String getUsername(){
+        return username;
     }
-    public void setName(String name){
-        this.name = name;
+    public void setUsername(String name){
+        this.username = name;
     }
 
     public String getEmail() {
@@ -34,14 +40,14 @@ public class User {
         this.email = email;
     }
 
-    public boolean setPassword(String password){
+    public boolean setPin(String pin){
         this.password = password;
         return true;
     }
     @Override
     public String toString(){
-        return "{ \n UserId: " + userID + "\n" +
-                " Name: " + name + "\n" +
+        return "{ \n UserId: " + id + "\n" +
+                " Name: " + username + "\n" +
                 " Email: " + email + " \n}";
     }
 }

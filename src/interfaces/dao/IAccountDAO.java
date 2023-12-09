@@ -1,8 +1,10 @@
 package interfaces.dao;
 
+import dao.dto.AccountDTO;
+
 public interface IAccountDAO {
-    AccountDTO findById(int id);
+    /*AccountDTO findById(int id);
     void createAccount(AccountDTO accountDTO);
     void updateAccount(AccountDTO accountDTO);
-    void deleteAccount(int id);
+    void deleteAccount(int id);*/
 }

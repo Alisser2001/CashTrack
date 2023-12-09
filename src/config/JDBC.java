@@ -20,13 +20,11 @@ public class JDBC {
             user: N/1 :account
             user: 1/N :expenses
             user: 1/N :revenues
-            account: 1/N :expenses
-            account: 1/N :revenues
              */
             String userEntityQuery = "CREATE TABLE IF NOT EXISTS users (id INT PRIMARY KEY, name VARCHAR(50), email VARCHAR(50), password VARCHAR(15), account FOREIGN KEY (SELECT accounts), revenues FOREIGN KEY (SELECT revenues), expenses FOREIGN KEY (SELECT expenses))";
-            String expenseEntityQuery = "CREATE TABLE IF NOT EXISTS expenses (id INT PRIMARY KEY, amount FLOAT, description VARCHAR(250), type ENUM(...types), date-time DATE-TIME, account FOREIGN KEY(SELECT accounts), user FOREIGN KEY(SELECT users))";
-            String revenueEntityQuery = "CREATE TABLE IF NOT EXISTS revenues (id INT PRIMARY KEY, amount FLOAT, description VARCHAR(250), type ENUM(...types), date-time DATE-TIME, account FOREIGN KEY(SELECT accounts), user FOREIGN KEY(SELECT users))";
-            String accountEntityQuery = "CREATE TABLE IF NOT EXISTS account (id INT PRIMARY KEY, balance FLOAT, expenses FOREIGN KEY (SELECT expenses), revenues FOREIGN KEY (SELECT revenues), users FOREIGN KEY (SELECT users)";
+            String expenseEntityQuery = "CREATE TABLE IF NOT EXISTS expenses (id INT PRIMARY KEY, amount FLOAT, description VARCHAR(250), type FOREIGN KEY (SELECT expensesTypes), date-time DATE-TIME, user FOREIGN KEY(SELECT users))";
+            String revenueEntityQuery = "CREATE TABLE IF NOT EXISTS revenues (id INT PRIMARY KEY, amount FLOAT, description VARCHAR(250), type FOREIGN KEY (SELECT revenuesTypes), date-time DATE-TIME, user FOREIGN KEY(SELECT users))";
+            String accountEntityQuery = "CREATE TABLE IF NOT EXISTS account (id INT PRIMARY KEY, balance FLOAT, users FOREIGN KEY (SELECT users))";
             statement.executeUpdate(userEntityQuery);
             statement.executeUpdate(expenseEntityQuery);
             statement.executeUpdate(revenueEntityQuery);

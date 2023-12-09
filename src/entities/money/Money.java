@@ -1,4 +1,5 @@
 package entities.money;
+import entities.user.User;
 import interfaces.entities.money.IMoney;
 import java.time.LocalDateTime;
 
@@ -7,8 +8,7 @@ abstract class Money<T extends Types> implements IMoney<T> {
     private String description;
     private LocalDateTime date_time;
     private T type;
-    private static int expenses_amount = 0;
-    private static int revenues_amount = 0;
+    private User user;
 
     public Double getMoney() {
         return money;
@@ -29,26 +29,19 @@ abstract class Money<T extends Types> implements IMoney<T> {
     public LocalDateTime getDateTime(){
         return date_time;
     }
+    public void setDateTime(LocalDateTime date_time){
+        this.date_time = date_time;
+    }
+    public User getUser(){
+        return user;
+    }
+    public void setUser(User user){
+        this.user = user;
+    }
     public T getType() {
         return type;
     }
     public void setType(T type){
         this.type = type;
-    }
-    public void setDateTime(LocalDateTime date_time){
-        this.date_time = date_time;
-    }
-
-    public static int getExpensesAmount(){
-        return expenses_amount;
-    }
-    public static int getRevenuesAmount(){
-        return revenues_amount;
-    }
-    public static void updateExpensesAmount(){
-        expenses_amount += 1;
-    }
-    public static void updateRevenuesAmount(){
-        revenues_amount += 1;
     }
 }

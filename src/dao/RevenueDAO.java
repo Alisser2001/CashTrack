@@ -3,7 +3,7 @@ package dao;
 import interfaces.dao.IRevenueDAO;
 
 public class RevenueDAO implements IRevenueDAO {
-    @Override
+    /*@Override
     public RevenueDTO findById(int id) {
         return null;
     }
@@ -21,5 +21,5 @@ public class RevenueDAO implements IRevenueDAO {
     @Override
     public void deleteRevenue(int id) {
 
-    }
+    }*/
 }

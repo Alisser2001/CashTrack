@@ -3,7 +3,7 @@ package dao;
 import interfaces.dao.IUserDAO;
 
 public class UserDAO implements IUserDAO {
-    @Override
+    /*@Override
     public UserDTO findById(int id) {
         return null;
     }
@@ -21,5 +21,5 @@ public class UserDAO implements IUserDAO {
     @Override
     public void deleteUser(int id) {
 
-    }
+    }*/
 }

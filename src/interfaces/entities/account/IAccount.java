@@ -5,9 +5,19 @@ import java.util.List;
 import java.util.Map;
 
 public interface IAccount {
+    int getAccountId();
+    User getAdmin();
+    void setAdmin(User admin);
+    String getName();
+    void setName(String name);
+    String getEmail();
+    void setEmail(String email);
+    String getDescription();
+    void setDescription(String description);
+    void setPassword(String password);
     Double getBalance();
     void setBalance(Double balance);
-    User getUser();
+    List<User> getUsers();
     void setUser(User user);
     List<Revenue> getRevenues();
     List<Expense> getExpenses();

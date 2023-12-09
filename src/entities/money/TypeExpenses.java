@@ -3,14 +3,12 @@ package entities.money;
 import java.util.Objects;
 
 public class TypeExpenses extends Types{
-    public TypeExpenses(String type, String description) {
+    public TypeExpenses(String type) {
         this.setType(type);
-        this.setDescription(description);
     }
     @Override
     public String toString() {
-        return "ExpenseType: " + this.getType() + "\n" +
-                "Description: " + this.getDescription();
+        return "ExpenseType: " + this.getType();
     }
     @Override
     public boolean equals(Object o) {

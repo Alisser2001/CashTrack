@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS account (
+    id INT NOT NULL AUTO_INCREMENT,
+    balance FLOAT,
+    PRIMARY KEY (id)
+);

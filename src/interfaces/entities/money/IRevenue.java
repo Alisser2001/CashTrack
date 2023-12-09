@@ -4,4 +4,5 @@ import entities.money.TypeRevenues;
 
 public interface IRevenue extends IMoney<TypeRevenues>{
     int getRevenueId();
+    void setRevenueId(int id);
 }
