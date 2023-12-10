@@ -6,15 +6,14 @@ import java.util.Map;
 
 public interface IAccount {
     int getAccountId();
-    User getAdmin();
-    void setAdmin(User admin);
-    String getName();
-    void setName(String name);
-    String getEmail();
-    void setEmail(String email);
+    int getAdminId();
+    void setAdminId(int id);
+    String getAccountName();
+    void setAccountName(String name);
     String getDescription();
     void setDescription(String description);
     void setPassword(String password);
+    String getPassword();
     Double getBalance();
     void setBalance(Double balance);
     List<User> getUsers();

@@ -7,29 +7,36 @@ import interfaces.dao.dto.IExpenseDTO;
 import java.time.LocalDateTime;
 
 public class ExpenseDTO implements IExpenseDTO {
-    private int expenseId;
+    private int id;
     private Double expenseAmount;
-    private TypeExpenses expenseType;
+    private String expenseType;
     private String description;
     private UserDTO user;
     private LocalDateTime dateTime;
 
-    // Constructor que acepta una instancia de Expense
-    public ExpenseDTO(Expense expense) {
-        this.expenseId = expense.getExpenseId();
-        this.expenseAmount = expense.getMoney();
-        this.expenseType = expense.getType();
-        this.description = expense.getDescription();
-        this.user = new UserDTO(expense.getUser());
-        this.dateTime = expense.getDateTime();
+    public ExpenseDTO(int id, Double amount, String type, String description, UserDTO user, LocalDateTime dateTime){
+        this.id = id;
+        this.expenseAmount = amount;
+        this.expenseType = type;
+        this.description = description;
+        this.user = user;
+        this.dateTime = dateTime;
     }
-    public int getExpenseId() {
-        return expenseId;
+    public ExpenseDTO(Double amount, String type, String description, UserDTO user, LocalDateTime dateTime) {
+        this.expenseAmount = amount;
+        this.expenseType = type;
+        this.description = description;
+        this.user = user;
+        this.dateTime = dateTime;
+    }
+
+    public int getId(){
+        return id;
     }
     public Double getExpenseAmount() {
         return expenseAmount;
     }
-    public TypeExpenses getExpenseType() {
+    public String getExpenseType() {
         return expenseType;
     }
     public String getDescription() {

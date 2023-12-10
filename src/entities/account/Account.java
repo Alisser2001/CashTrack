@@ -62,11 +62,11 @@ public class Account implements IAccount, IAccountOps {
         this.email = admin.getEmail();
     }
     @Override
-    public String getName() {
+    public String getAccountName() {
         return name;
     }
     @Override
-    public void setName(String name) {
+    public void setAccountName(String name) {
         this.name = name;
     }
     @Override

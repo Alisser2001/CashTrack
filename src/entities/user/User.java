@@ -22,7 +22,7 @@ public class User implements IUser {
         this.email = email;
     }
 
-    public int getUserID(){
+    public int getUserId(){
         return this.id;
     }
     public String getUsername(){

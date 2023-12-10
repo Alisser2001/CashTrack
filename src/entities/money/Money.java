@@ -32,11 +32,11 @@ abstract class Money<T extends Types> implements IMoney<T> {
     public void setDateTime(LocalDateTime date_time){
         this.date_time = date_time;
     }
-    public User getUser(){
+    public User getUserId(){
         return user;
     }
-    public void setUser(User user){
-        this.user = user;
+    public void setUserId(int id){
+        this.user = id;
     }
     public T getType() {
         return type;

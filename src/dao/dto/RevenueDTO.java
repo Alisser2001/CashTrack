@@ -7,29 +7,35 @@ import interfaces.dao.dto.IRevenueDTO;
 import java.time.LocalDateTime;
 
 public class RevenueDTO implements IRevenueDTO {
-    private int revenueId;
+    private int id;
     private Double revenueAmount;
-    private TypeRevenues revenueType;
+    private String revenueType;
     private String description;
     private UserDTO user;
     private LocalDateTime dateTime;
 
-    public RevenueDTO(Revenue revenue) {
-        this.revenueId = revenue.getRevenueId();
-        this.revenueAmount = revenue.getMoney();
-        this.revenueType = revenue.getType();
-        this.description = revenue.getDescription();
-        this.user = new UserDTO(revenue.getUser());
-        this.dateTime = revenue.getDateTime();
+    public RevenueDTO(int id, Double amount, String type, String description, UserDTO user, LocalDateTime dateTime) {
+        this.id = id;
+        this.revenueAmount = amount;
+        this.revenueType = type;
+        this.description = description;
+        this.user = user;
+        this.dateTime = dateTime;
     }
-
-    public int getRevenueId() {
-        return revenueId;
+    public RevenueDTO(Double amount, String type, String description, UserDTO user, LocalDateTime dateTime) {
+        this.revenueAmount = amount;
+        this.revenueType = type;
+        this.description = description;
+        this.user = user;
+        this.dateTime = dateTime;
+    }
+    public int getId(){
+        return id;
     }
     public Double getRevenueAmount() {
         return revenueAmount;
     }
-    public TypeRevenues getRevenueType() {
+    public String getRevenueType() {
         return revenueType;
     }
     public String getDescription() {

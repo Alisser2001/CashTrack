@@ -24,7 +24,7 @@ public class AccountDAO implements IAccountDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 Account account = new Account();
-                account.setName(resultSet.getString("accountName"));
+                account.setAccountName(resultSet.getString("accountName"));
                 PreparedStatement getAdminStatement = conn.prepareStatement("SELECT * FROM users WHERE id = ?");
                 getAdminStatement.setInt(1, resultSet.getInt("adminId"));
                 ResultSet adminSet = getAdminStatement.executeQuery();
@@ -53,7 +53,7 @@ public class AccountDAO implements IAccountDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 Account account = new Account();
-                account.setName(resultSet.getString("accountName"));
+                account.setAccountName(resultSet.getString("accountName"));
                 PreparedStatement getAdminStatement = conn.prepareStatement("SELECT * FROM users WHERE id = ?");
                 getAdminStatement.setInt(1, id);
                 ResultSet adminSet = getAdminStatement.executeQuery();
@@ -78,7 +78,7 @@ public class AccountDAO implements IAccountDAO {
         try{
             PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO accounts (accountName, adminId, description, password, balance) VALUES (?, ?, ?, ?, ?)");
             preparedStatement.setString(1, accountDTO.getAccountName());
-            preparedStatement.setInt(2, accountDTO.getAdminId().getUserID());
+            preparedStatement.setInt(2, accountDTO.getAdminId().getUserId());
             preparedStatement.setString(3, accountDTO.getDescription());
             preparedStatement.setString(4, "12345");
             preparedStatement.setDouble(5, accountDTO.getBalance());

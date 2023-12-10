@@ -6,10 +6,12 @@ import java.time.LocalDateTime;
 
 
 public interface IRevenueDTO {
-    int getRevenueId();
     Double getRevenueAmount();
-    TypeRevenues getRevenueType();
+    String getRevenueType();
     String getDescription();
     UserDTO getUser();
     LocalDateTime getDateTime();
+
+    // Métodos opcionales sólo en transferencia de información desde la DB a la capa de presentación
+    int getId();
 }

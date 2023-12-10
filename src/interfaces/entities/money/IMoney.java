@@ -11,8 +11,8 @@ public interface IMoney<T extends ITypes> {
     void setDescription(String description);
     LocalDateTime getDateTime();
     void setDateTime(LocalDateTime date_time);
-    User getUser();
-    void setUser(User user);
+    User getUserId();
+    void setUserId(int id);
     T getType();
     void setType(T type);
 }

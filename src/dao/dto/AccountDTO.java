@@ -13,48 +13,50 @@ import java.util.Map;
 
 public class AccountDTO implements IAccountDTO {
     private int id;
-    private User admin;
+    private UserDTO admin;
     private String description;
-    private String name;
-    private String email;
+    private String accountName;
     private Double balance;
+    private String password;
     private List<User> users;
     private List<Expense> expenses;
     private List<Revenue> revenues;
     private Map<TypeExpenses, Integer> typesExpenses;
     private Map<TypeRevenues, Integer> typesRevenues;
 
-    public AccountDTO(Account account) {
-        this.id = account.getAccountId();
-        this.admin = account.getAdmin();
-        this.name = account.getName();
-        this.description = account.getDescription();
-        this.email = account.getEmail();
-        this.balance = account.getBalance();
-        this.users = account.getUsers();
-        this.expenses = account.getExpenses();
-        this.revenues = account.getRevenues();
-        this.typesExpenses = account.getTypesExpenses();
-        this.typesRevenues = account.getTypesRevenues();
+    public AccountDTO(int id, UserDTO admin, String accName, String description, Double balance) {
+        this.id = id;
+        this.admin = admin;
+        this.accountName = accName;
+        this.description = description;
+        this.balance = balance;
     }
-    public int getAccountId(){
+    public AccountDTO(UserDTO admin, String accName, String description, String password, Double balance) {
+        this.admin = admin;
+        this.accountName = accName;
+        this.description = description;
+        this.password = password;
+        this.balance = balance;
+    }
+    public int getId(){
         return id;
     }
-    public User getAdminId() {
+    public UserDTO getAdmin() {
         return admin;
     }
     public String getAccountName() {
-        return name;
+        return accountName;
     }
     @Override
     public String getDescription() {
         return description;
     }
-    public String getEmail() {
-        return email;
-    }
     public Double getBalance() {
         return balance;
+    }
+    @Override
+    public String getPassword() {
+        return password;
     }
     public List<User> getUsers() {
         return users;

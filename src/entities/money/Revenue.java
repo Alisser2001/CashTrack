@@ -11,7 +11,7 @@ public class Revenue extends Money<TypeRevenues> implements IRevenue {
         this.setMoney(revenue);
         this.setDescription(description);
         this.setDateTime(LocalDateTime.now());
-        this.setUser(user);
+        this.setUserId(user);
         this.setType(type);
     }
     public int getRevenueId(){

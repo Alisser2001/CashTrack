@@ -4,23 +4,38 @@ import entities.user.User;
 import interfaces.dao.dto.IUserDTO;
 
 public class UserDTO implements IUserDTO {
-    private int userId;
+    private int id;
     private String username;
     private String email;
+    private int accountId;
+    private String pin;
 
-    public UserDTO(User user) {
-        this.userId = user.getUserID();
-        this.username = user.getUsername();
-        this.email = user.getEmail();
+    public UserDTO(String username, String email, int accId, String pin) {
+        this.username = username;
+        this.email = email;
+        this.accountId = accId;
+        this.pin = pin;
     }
-    public int getUserId() {
-        return userId;
+    public UserDTO(int id, String username, String email, int accId) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.accountId = accId;
+    }
+    public int getId(){
+        return id;
     }
     public String getUsername() {
         return username;
     }
     public String getEmail() {
         return email;
+    }
+    public int getAccountId(){
+        return accountId;
+    }
+    public String getPin(){
+        return pin;
     }
 }
 

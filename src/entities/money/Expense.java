@@ -11,7 +11,7 @@ public class Expense extends Money<TypeExpenses> implements IExpense {
         this.setMoney(expense);
         this.setDescription(description);
         this.setType(type);
-        this.setUser(user);
+        this.setUserId(user);
         this.setDateTime(LocalDateTime.now());
     }
     public int getExpenseId(){

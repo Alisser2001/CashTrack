@@ -1,5 +1,13 @@
 import config.JDBC;
+import dao.AccountDAO;
+import dao.UserDAO;
+import dao.dto.AccountDTO;
+import entities.account.Account;
 import exceptions.ExpenseException;
+import interfaces.dao.IAccountDAO;
+import interfaces.dao.IUserDAO;
+import interfaces.dao.dto.IAccountDTO;
+import interfaces.entities.account.IAccount;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -8,6 +16,9 @@ public class CashTrackApp {
     public static void main(String[] args) throws ExpenseException, SQLException {
         Connection conn = JDBC.getDbConn();
         System.out.println("Conexión Exitosa");
+        IUserDAO newUserDao = new UserDAO();
+        IAccountDAO newAccDao = new AccountDAO(conn);
+        IAccountDTO newAccDto = new AccountDTO();
         conn.close();
 
         /*Scanner scanner = new Scanner(System.in);
