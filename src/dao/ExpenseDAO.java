@@ -13,7 +13,7 @@ public class ExpenseDAO implements IExpenseDAO {
 
     }
     @Override
-    public void deleteExpense(int id) {
+    public void deleteExpense(ExpenseDTO expenseDTO) {
 
     }
 }

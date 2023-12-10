@@ -64,9 +64,6 @@ public class JDBC {
             statement.executeUpdate(expenseEntityQuery);
             statement.executeUpdate(revenueEntityQuery);
             return conn;
-            /*
-            Cerrar la conexión
-            connection.close();*/
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

@@ -6,7 +6,8 @@ public class User implements IUser {
     private int id;
     private String username;
     private String email;
-    private String password;
+    private String pin;
+    private int accountId;
 
     public User(){ }
     public User(String username){

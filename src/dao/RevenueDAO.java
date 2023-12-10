@@ -13,7 +13,7 @@ public class RevenueDAO implements IRevenueDAO {
 
     }
     @Override
-    public void deleteRevenue(int id) {
+    public void deleteRevenue(RevenueDTO revenueDTO) {
 
     }
 }
