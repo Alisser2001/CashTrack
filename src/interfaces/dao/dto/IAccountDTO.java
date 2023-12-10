@@ -11,9 +11,9 @@ import java.util.Map;
 
 public interface IAccountDTO {
     int getAccountId();
-    User getAdmin();
-    String getName();
-    String getEmail();
+    User getAdminId();
+    String getAccountName();
+    String getDescription();
     Double getBalance();
     List<User> getUsers();
     List<Expense> getExpenses();

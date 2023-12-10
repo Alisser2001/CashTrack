@@ -1,9 +1,10 @@
 package dao;
 
+import dao.dto.ExpenseDTO;
 import interfaces.dao.IExpenseDAO;
 
 public class ExpenseDAO implements IExpenseDAO {
-    /*@Override
+    @Override
     public ExpenseDTO findById(int id) {
         return null;
     }
@@ -12,11 +13,7 @@ public class ExpenseDAO implements IExpenseDAO {
 
     }
     @Override
-    public void updateExpense(ExpenseDTO expenseDTO) {
-
-    }
-    @Override
     public void deleteExpense(int id) {
 
-    }*/
+    }
 }

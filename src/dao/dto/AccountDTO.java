@@ -14,6 +14,7 @@ import java.util.Map;
 public class AccountDTO implements IAccountDTO {
     private int id;
     private User admin;
+    private String description;
     private String name;
     private String email;
     private Double balance;
@@ -27,6 +28,7 @@ public class AccountDTO implements IAccountDTO {
         this.id = account.getAccountId();
         this.admin = account.getAdmin();
         this.name = account.getName();
+        this.description = account.getDescription();
         this.email = account.getEmail();
         this.balance = account.getBalance();
         this.users = account.getUsers();
@@ -38,11 +40,15 @@ public class AccountDTO implements IAccountDTO {
     public int getAccountId(){
         return id;
     }
-    public User getAdmin() {
+    public User getAdminId() {
         return admin;
     }
-    public String getName() {
+    public String getAccountName() {
         return name;
+    }
+    @Override
+    public String getDescription() {
+        return description;
     }
     public String getEmail() {
         return email;

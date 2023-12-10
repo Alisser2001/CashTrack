@@ -2,10 +2,9 @@ CREATE TABLE IF NOT EXISTS revenues (
     id INT NOT NULL AUTO_INCREMENT,
     amount FLOAT,
     description VARCHAR(250),
-    type INT,
+    type VARCHAR(25),
     date_time TIMESTAMP,
-    user INT,
+    userId INT,
     PRIMARY KEY(id),
-    CONSTRAINT fkType FOREIGN KEY (type) REFERENCES revenuesTypes(id),
-    CONSTRAINT fkUser FOREIGN KEY (user) REFERENCES users(id)
+    CONSTRAINT fkUserRevenue FOREIGN KEY (userId) REFERENCES users(id)
 );

@@ -21,22 +21,51 @@ public class JDBC {
             user: 1/N :expenses
             user: 1/N :revenues
              */
-            String userEntityQuery = "CREATE TABLE IF NOT EXISTS users (id INT PRIMARY KEY, name VARCHAR(50), email VARCHAR(50), password VARCHAR(15), account FOREIGN KEY (SELECT accounts), revenues FOREIGN KEY (SELECT revenues), expenses FOREIGN KEY (SELECT expenses))";
-            String expenseEntityQuery = "CREATE TABLE IF NOT EXISTS expenses (id INT PRIMARY KEY, amount FLOAT, description VARCHAR(250), type FOREIGN KEY (SELECT expensesTypes), date-time DATE-TIME, user FOREIGN KEY(SELECT users))";
-            String revenueEntityQuery = "CREATE TABLE IF NOT EXISTS revenues (id INT PRIMARY KEY, amount FLOAT, description VARCHAR(250), type FOREIGN KEY (SELECT revenuesTypes), date-time DATE-TIME, user FOREIGN KEY(SELECT users))";
-            String accountEntityQuery = "CREATE TABLE IF NOT EXISTS account (id INT PRIMARY KEY, balance FLOAT, users FOREIGN KEY (SELECT users))";
+            String userEntityQuery = "CREATE TABLE IF NOT EXISTS users (" +
+                    "id INT NOT NULL AUTO_INCREMENT," +
+                    "username VARCHAR(50)," +
+                    "email VARCHAR(50)," +
+                    "pin VARCHAR(15)," +
+                    "account INT," +
+                    "PRIMARY KEY(id)," +
+                    "CONSTRAINT fkAccountUser FOREIGN KEY (account) REFERENCES accounts(id)" +
+                    ");";
+            String expenseEntityQuery = "CREATE TABLE IF NOT EXISTS expenses (" +
+                    "id INT NOT NULL AUTO_INCREMENT," +
+                    "amount FLOAT," +
+                    "description VARCHAR(250)," +
+                    "type VARCHAR(25)," +
+                    "date_time TIMESTAMP," +
+                    "userId INT," +
+                    "PRIMARY KEY(id)," +
+                    "CONSTRAINT fkUserExpense FOREIGN KEY (userId) REFERENCES users(id)" +
+                    ");";
+            String revenueEntityQuery = "CREATE TABLE IF NOT EXISTS revenues (" +
+                    "id INT NOT NULL AUTO_INCREMENT," +
+                    "amount FLOAT," +
+                    "description VARCHAR(250)," +
+                    "type VARCHAR(25)," +
+                    "date_time TIMESTAMP," +
+                    "userId INT," +
+                    "PRIMARY KEY(id)," +
+                    "CONSTRAINT fkUserRevenue FOREIGN KEY (userId) REFERENCES users(id)" +
+                    ");";
+            String accountEntityQuery = "CREATE TABLE IF NOT EXISTS accounts (" +
+                    "id INT NOT NULL AUTO_INCREMENT," +
+                    "accountName VARCHAR(50)," +
+                    "adminId INT NOT NULL," +
+                    "description VARCHAR(250)," +
+                    "password VARCHAR(250)," +
+                    "balance FLOAT," +
+                    "PRIMARY KEY (id)" +
+                    ");";
+            statement.executeUpdate(accountEntityQuery);
             statement.executeUpdate(userEntityQuery);
             statement.executeUpdate(expenseEntityQuery);
             statement.executeUpdate(revenueEntityQuery);
-            statement.executeUpdate(accountEntityQuery);
             return conn;
             /*
-            // Insertar registros
-            String insertQuery = "INSERT INTO usuarios VALUES (1, 'John Doe'), (2, 'Jane Smith')";
-            statement.executeUpdate(insertQuery);
-            // Cerrar la conexión
-            statement.close();
-            // Cerrar la conexión
+            Cerrar la conexión
             connection.close();*/
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);

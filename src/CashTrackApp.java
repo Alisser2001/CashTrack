@@ -8,7 +8,7 @@ public class CashTrackApp {
     public static void main(String[] args) throws ExpenseException, SQLException {
         Connection conn = JDBC.getDbConn();
         System.out.println("Conexión Exitosa");
-        //conn.close();
+        conn.close();
 
         /*Scanner scanner = new Scanner(System.in);
         User user = new User();
