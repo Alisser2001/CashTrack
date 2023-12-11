@@ -1,6 +1,5 @@
 package interfaces.entities.money;
 
-import entities.money.Types;
 import java.time.LocalDateTime;
 
 public interface IMoney {
@@ -8,8 +7,8 @@ public interface IMoney {
     void setMoney(Double money);
     String getDescription();
     void setDescription(String description);
-    Types getType();
-    void setType(Types type);
+    String getType();
+    void setType(String type);
     LocalDateTime getDateTime();
     void setDateTime(LocalDateTime date_time);
     int getUserId();

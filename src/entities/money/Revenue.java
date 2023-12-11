@@ -5,7 +5,8 @@ import java.time.LocalDateTime;
 
 public class Revenue extends Money implements IRevenue {
     private int revenue_id;
-    public Revenue(Double revenue, Types type, String description, int userId){
+    public Revenue() { }
+    public Revenue(Double revenue, String type, String description, int userId){
         this.setMoney(revenue);
         this.setDescription(description);
         this.setDateTime(LocalDateTime.now());

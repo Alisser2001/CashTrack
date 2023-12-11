@@ -2,7 +2,6 @@ package entities.user;
 
 import entities.money.Expense;
 import entities.money.Revenue;
-import entities.money.Types;
 import interfaces.entities.user.IUser;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,8 +16,8 @@ public class User implements IUser {
     private int accountId;
     private List<Expense> expenses;
     private List<Revenue> revenues;
-    private Map<Types, Integer> typesExpenses;
-    private Map<Types, Integer> typesRevenues;
+    private Map<String, Integer> typesExpenses;
+    private Map<String, Integer> typesRevenues;
 
     public User(){ }
     public User(String username){
@@ -63,7 +62,7 @@ public class User implements IUser {
     }
     public void setAccountId(int id) { this.accountId = id; }
     public int getAccountId() { return accountId; }
-    public void addRevenue(Double amount, Types type, String description, int userId){
+    public void addRevenue(Double amount, String type, String description, int userId){
         if (!typesRevenues.containsKey(type)){
             typesRevenues.put(type, 1);
         } else {
@@ -72,10 +71,7 @@ public class User implements IUser {
         this.revenues.add(new Revenue(amount, type, description, userId));
     }
 
-    public void addExpense(Double amount, Types type, String description, int userId) {
-        /*if(amount > actualBalance){
-            throw new ExpenseException("No se poseen fondos suficientes. Saldo: " + this.getBalance());
-        }*/
+    public void addExpense(Double amount, String type, String description, int userId) {
         if (!typesExpenses.containsKey(type)){
             typesExpenses.put(type, 1);
         } else {
@@ -92,11 +88,11 @@ public class User implements IUser {
         return expenses;
     }
 
-    public Map<Types, Integer> getTypesExpenses() {
+    public Map<String, Integer> getTypesExpenses() {
         return typesExpenses;
     }
 
-    public Map<Types, Integer> getTypesRevenues() {
+    public Map<String, Integer> getTypesRevenues() {
         return typesRevenues;
     }
 

@@ -65,7 +65,7 @@ public class AccountDAO implements IAccountDAO {
             preparedStatement.setString(3, accountDTO.getDescription());
             preparedStatement.setString(4, accountDTO.getPassword());
             preparedStatement.setDouble(5, accountDTO.getBalance());
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {
             throw new DAOException("Error al encontrar la cuenta.", (SQLException) e);
@@ -74,8 +74,21 @@ public class AccountDAO implements IAccountDAO {
     public void deleteAccount(AccountDTO account) throws DAOException {
         try{
             PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM accounts WHERE id = ?");
+            PreparedStatement deleteRevenuesPreparedStatement = conn.prepareStatement("DELETE FROM revenues" +
+                    "WHERE userId IN (SELECT userId FROM users WHERE account = ?);");
+            PreparedStatement deleteExpensesPreparedStatement = conn.prepareStatement("DELETE FROM expenses" +
+                    "WHERE userId IN (SELECT userId FROM users WHERE account = ?);");
+            PreparedStatement deleteAccFromUsersPreparedStatement = conn.prepareStatement("UPDATE users" +
+                    "SET account = NULL" +
+                    "WHERE account = ?;");
+            deleteRevenuesPreparedStatement.setInt(1, account.getId());
+            deleteExpensesPreparedStatement.setInt(1, account.getId());
+            deleteAccFromUsersPreparedStatement.setInt(1, account.getId());
             preparedStatement.setInt(1, account.getId());
-            preparedStatement.executeQuery();
+            deleteRevenuesPreparedStatement.executeUpdate();
+            deleteExpensesPreparedStatement.executeUpdate();
+            deleteAccFromUsersPreparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {
             throw new DAOException("Error al encontrar la cuenta.", (SQLException) e);

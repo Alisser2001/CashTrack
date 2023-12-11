@@ -5,7 +5,8 @@ import java.time.LocalDateTime;
 
 public class Expense extends Money implements IExpense {
     private int expense_id;
-    public Expense(Double expense, Types type, String description, int userId){
+    public Expense() { }
+    public Expense(Double expense, String type, String description, int userId){
         this.setMoney(expense);
         this.setDescription(description);
         this.setType(type);

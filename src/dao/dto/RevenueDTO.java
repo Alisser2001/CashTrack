@@ -6,19 +6,19 @@ import java.time.LocalDateTime;
 public class RevenueDTO extends MoneyDTO implements IRevenueDTO {
     private int id;
 
-    public RevenueDTO(int id, Double amount, String type, String description, UserDTO user, LocalDateTime dateTime) {
+    public RevenueDTO(int id, Double amount, String type, String description, int user, LocalDateTime dateTime) {
         this.id = id;
         this.setAmount(amount);
         this.setType(type);
         this.setDescription(description);
-        this.setUser(user);
+        this.setUserId(user);
         this.setDateTime(dateTime);
     }
-    public RevenueDTO(Double amount, String type, String description, UserDTO user, LocalDateTime dateTime) {
+    public RevenueDTO(Double amount, String type, String description, int user, LocalDateTime dateTime) {
         this.setAmount(amount);
         this.setType(type);
         this.setDescription(description);
-        this.setUser(user);
+        this.setUserId(user);
         this.setDateTime(dateTime);
     }
     public int getRevenueId(){

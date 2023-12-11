@@ -6,19 +6,19 @@ import java.time.LocalDateTime;
 public class ExpenseDTO extends MoneyDTO implements IExpenseDTO {
     private int id;
 
-    public ExpenseDTO(int id, Double amount, String type, String description, UserDTO user, LocalDateTime dateTime){
+    public ExpenseDTO(int id, Double amount, String type, String description, int user, LocalDateTime dateTime){
         this.id = id;
         this.setAmount(amount);
         this.setType(type);
         this.setDescription(description);
-        this.setUser(user);
+        this.setUserId(user);
         this.setDateTime(dateTime);
     }
-    public ExpenseDTO(Double amount, String type, String description, UserDTO user, LocalDateTime dateTime) {
+    public ExpenseDTO(Double amount, String type, String description, int user, LocalDateTime dateTime) {
         this.setAmount(amount);
         this.setType(type);
         this.setDescription(description);
-        this.setUser(user);
+        this.setUserId(user);
         this.setDateTime(dateTime);
     }
 

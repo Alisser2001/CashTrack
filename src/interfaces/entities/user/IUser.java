@@ -2,7 +2,7 @@ package interfaces.entities.user;
 
 import entities.money.Expense;
 import entities.money.Revenue;
-import entities.money.Types;
+
 import java.util.List;
 import java.util.Map;
 
@@ -17,12 +17,12 @@ public interface IUser {
     String getPin();
     void setAccountId(int id);
     int getAccountId();
-    void addExpense(Double amount, Types type, String description, int userId);
-    void addRevenue(Double amount, Types type, String description, int userId);
+    void addExpense(Double amount, String type, String description, int userId);
+    void addRevenue(Double amount, String type, String description, int userId);
     List<Revenue> getRevenues();
     List<Expense> getExpenses();
-    Map<Types, Integer> getTypesExpenses();
-    Map<Types, Integer> getTypesRevenues();
+    Map<String, Integer> getTypesExpenses();
+    Map<String, Integer> getTypesRevenues();
     String toString();
 }
 

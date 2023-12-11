@@ -7,6 +7,6 @@ public interface IMoneyDTO {
     Double getAmount();
     String getType();
     String getDescription();
-    UserDTO getUser();
+    int getUserId();
     LocalDateTime getDateTime();
 }

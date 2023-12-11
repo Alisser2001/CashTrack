@@ -21,6 +21,14 @@ public class JDBC {
             user: 1/N :expenses
             user: 1/N :revenues
              */
+            String expenseTypeQuery = "CREATE TYPE IF NOT EXISTS ExpenseType AS ENUM (" +
+                    "'automovil', 'casa', 'comida', 'comunicaciones', 'deportes', 'entretenimiento', 'facturas', 'higiene', 'mascotas', 'regalos', 'restaurante', 'ropa', 'salud', 'taxi', 'transporte'" +
+                    ");";
+            String revenueTypeQuery = "CREATE TYPE IF NOT EXISTS RevenueType AS ENUM (" +
+                    "'ahorros', 'depositos', 'regalos', 'salario'" +
+                    ");";
+            statement.executeUpdate(expenseTypeQuery);
+            statement.executeUpdate(revenueTypeQuery);
             String userEntityQuery = "CREATE TABLE IF NOT EXISTS users (" +
                     "id INT NOT NULL AUTO_INCREMENT," +
                     "username VARCHAR(50)," +
@@ -34,7 +42,7 @@ public class JDBC {
                     "id INT NOT NULL AUTO_INCREMENT," +
                     "amount FLOAT," +
                     "description VARCHAR(250)," +
-                    "type VARCHAR(25)," +
+                    "type ExpenseType," +
                     "date_time TIMESTAMP," +
                     "userId INT," +
                     "PRIMARY KEY(id)," +
@@ -44,7 +52,7 @@ public class JDBC {
                     "id INT NOT NULL AUTO_INCREMENT," +
                     "amount FLOAT," +
                     "description VARCHAR(250)," +
-                    "type VARCHAR(25)," +
+                    "type RevenueType," +
                     "date_time TIMESTAMP," +
                     "userId INT," +
                     "PRIMARY KEY(id)," +

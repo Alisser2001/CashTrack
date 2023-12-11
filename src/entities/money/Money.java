@@ -7,7 +7,7 @@ abstract class Money implements IMoney {
     private Double money;
     private String description;
     private LocalDateTime date_time;
-    private Types type;
+    private String type;
     private int userId;
 
     public Double getMoney() {
@@ -38,10 +38,10 @@ abstract class Money implements IMoney {
     public void setUserId(int id){
         this.userId = id;
     }
-    public Types getType() {
+    public String getType() {
         return type;
     }
-    public void setType(Types type){
+    public void setType(String type){
         this.type = type;
     }
 }

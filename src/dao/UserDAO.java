@@ -82,7 +82,7 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setString(2, userDTO.getEmail());
             preparedStatement.setString(3, userDTO.getPin());
             preparedStatement.setInt(4, userDTO.getAccountId());
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {
             throw new DAOException("Error al encontrar la cuenta.", (SQLException) e);
@@ -92,8 +92,16 @@ public class UserDAO implements IUserDAO {
     public void deleteUser(UserDTO userDTO) throws DAOException {
         try{
             PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM users WHERE id = ?");
+            PreparedStatement deleteRevenuesPreparedStatement = conn.prepareStatement("DELETE FROM revenues" +
+                    "WHERE userId = ?;");
+            PreparedStatement deleteExpensesPreparedStatement = conn.prepareStatement("DELETE FROM expenses" +
+                    "WHERE userId = ?;");
+            deleteRevenuesPreparedStatement.setInt(1, userDTO.getId());
+            deleteExpensesPreparedStatement.setInt(1, userDTO.getId());
             preparedStatement.setInt(1, userDTO.getId());
-            preparedStatement.executeQuery();
+            deleteRevenuesPreparedStatement.executeUpdate();
+            deleteExpensesPreparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {
             throw new DAOException("Error al encontrar la cuenta.", (SQLException) e);

@@ -2,7 +2,7 @@ package interfaces.dao.dto;
 
 import entities.money.Expense;
 import entities.money.Revenue;
-import entities.money.Types;
+
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +16,6 @@ public interface IUserDTO {
     String getPin();
     List<Expense> getExpenses();
     List<Revenue> getRevenues();
-    Map<Types, Integer> getTypesExpenses();
-    Map<Types, Integer> getTypesRevenues();
+    Map<String, Integer> getTypesExpenses();
+    Map<String, Integer> getTypesRevenues();
 }
