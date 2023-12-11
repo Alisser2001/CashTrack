@@ -1,17 +1,15 @@
 package entities.money;
 
-import entities.user.User;
 import interfaces.entities.money.IRevenue;
-
 import java.time.LocalDateTime;
 
-public class Revenue extends Money<TypeRevenues> implements IRevenue {
+public class Revenue extends Money implements IRevenue {
     private int revenue_id;
-    public Revenue(Double revenue, TypeRevenues type, String description, User user){
+    public Revenue(Double revenue, Types type, String description, int userId){
         this.setMoney(revenue);
         this.setDescription(description);
         this.setDateTime(LocalDateTime.now());
-        this.setUserId(user);
+        this.setUserId(userId);
         this.setType(type);
     }
     public int getRevenueId(){

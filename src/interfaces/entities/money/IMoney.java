@@ -1,18 +1,17 @@
 package interfaces.entities.money;
 
-import entities.user.User;
-
+import entities.money.Types;
 import java.time.LocalDateTime;
 
-public interface IMoney<T extends ITypes> {
+public interface IMoney {
     Double getMoney();
     void setMoney(Double money);
     String getDescription();
     void setDescription(String description);
+    Types getType();
+    void setType(Types type);
     LocalDateTime getDateTime();
     void setDateTime(LocalDateTime date_time);
-    User getUserId();
+    int getUserId();
     void setUserId(int id);
-    T getType();
-    void setType(T type);
 }

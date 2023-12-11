@@ -1,14 +1,14 @@
 package entities.money;
-import entities.user.User;
+
 import interfaces.entities.money.IMoney;
 import java.time.LocalDateTime;
 
-abstract class Money<T extends Types> implements IMoney<T> {
+abstract class Money implements IMoney {
     private Double money;
     private String description;
     private LocalDateTime date_time;
-    private T type;
-    private User user;
+    private Types type;
+    private int userId;
 
     public Double getMoney() {
         return money;
@@ -32,16 +32,16 @@ abstract class Money<T extends Types> implements IMoney<T> {
     public void setDateTime(LocalDateTime date_time){
         this.date_time = date_time;
     }
-    public User getUserId(){
-        return user;
+    public int getUserId(){
+        return userId;
     }
     public void setUserId(int id){
-        this.user = id;
+        this.userId = id;
     }
-    public T getType() {
+    public Types getType() {
         return type;
     }
-    public void setType(T type){
+    public void setType(Types type){
         this.type = type;
     }
 }

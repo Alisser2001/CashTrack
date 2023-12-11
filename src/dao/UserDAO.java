@@ -1,12 +1,9 @@
 package dao;
 
-import dao.dto.AccountDTO;
 import dao.dto.UserDTO;
-import entities.account.Account;
 import entities.user.User;
 import exceptions.DAOException;
 import interfaces.dao.IUserDAO;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

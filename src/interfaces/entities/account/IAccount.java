@@ -1,11 +1,10 @@
 package interfaces.entities.account;
 import entities.user.User;
-import entities.money.*;
 import java.util.List;
-import java.util.Map;
 
 public interface IAccount {
     int getAccountId();
+    void setAccountId(int id);
     int getAdminId();
     void setAdminId(int id);
     String getAccountName();
@@ -18,9 +17,5 @@ public interface IAccount {
     void setBalance(Double balance);
     List<User> getUsers();
     void setUser(User user);
-    List<Revenue> getRevenues();
-    List<Expense> getExpenses();
-    Map<TypeExpenses, Integer> getTypesExpenses();
-    Map<TypeRevenues, Integer> getTypesRevenues();
     String toString();
 }

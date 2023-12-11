@@ -1,17 +1,15 @@
 package entities.money;
 
-import entities.user.User;
 import interfaces.entities.money.IExpense;
-
 import java.time.LocalDateTime;
 
-public class Expense extends Money<TypeExpenses> implements IExpense {
+public class Expense extends Money implements IExpense {
     private int expense_id;
-    public Expense(Double expense, TypeExpenses type, String description, User user){
+    public Expense(Double expense, Types type, String description, int userId){
         this.setMoney(expense);
         this.setDescription(description);
         this.setType(type);
-        this.setUserId(user);
+        this.setUserId(userId);
         this.setDateTime(LocalDateTime.now());
     }
     public int getExpenseId(){

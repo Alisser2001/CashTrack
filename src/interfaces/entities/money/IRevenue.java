@@ -1,8 +1,6 @@
 package interfaces.entities.money;
 
-import entities.money.TypeRevenues;
-
-public interface IRevenue extends IMoney<TypeRevenues>{
+public interface IRevenue extends IMoney{
     int getRevenueId();
     void setRevenueId(int id);
 }

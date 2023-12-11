@@ -1,7 +1,6 @@
 package interfaces.entities.money;
-import entities.money.TypeExpenses;
 
-public interface IExpense extends IMoney<TypeExpenses>{
+public interface IExpense extends IMoney{
     int getExpenseId();
     void setExpenseId(int id);
 }
