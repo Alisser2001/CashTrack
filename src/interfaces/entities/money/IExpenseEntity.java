@@ -1,6 +1,6 @@
 package interfaces.entities.money;
 
-public interface IExpense extends IMoney{
+public interface IExpenseEntity extends IMoneyEntity {
     int getExpenseId();
     void setExpenseId(int id);
 }

@@ -8,4 +8,9 @@ public interface IAccountDAO {
     AccountDTO findByAdminId(int id) throws DAOException;
     void createAccount(AccountDTO accountDTO) throws DAOException;
     void deleteAccount(AccountDTO accountDTO) throws DAOException;
+    void updateAccountName(String name);
+    void updateAdminId(int id);
+    void updateDescription(String description);
+    void updatePassword(String password);
+    void updateBalance(Float balance);
 }

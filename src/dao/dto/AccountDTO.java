@@ -1,6 +1,6 @@
 package dao.dto;
 
-import entities.user.User;
+import entities.user.UserEntity;
 import interfaces.dao.dto.IAccountDTO;
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class AccountDTO implements IAccountDTO {
     private String accountName;
     private Double balance;
     private String password;
-    private List<User> users;
+    private List<UserEntity> users;
 
     public AccountDTO(int id, int adminId, String accName, String description, Double balance) {
         this.id = id;
@@ -47,7 +47,7 @@ public class AccountDTO implements IAccountDTO {
     public String getPassword() {
         return password;
     }
-    public List<User> getUsers() {
+    public List<UserEntity> getUsers() {
         return users;
     }
 }

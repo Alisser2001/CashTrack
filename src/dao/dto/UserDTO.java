@@ -1,7 +1,7 @@
 package dao.dto;
 
-import entities.money.Expense;
-import entities.money.Revenue;
+import entities.money.ExpenseEntity;
+import entities.money.RevenueEntity;
 import interfaces.dao.dto.IUserDTO;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +12,8 @@ public class UserDTO implements IUserDTO {
     private String email;
     private int accountId;
     private String pin;
-    private List<Expense> expenses;
-    private List<Revenue> revenues;
+    private List<ExpenseEntity> expenses;
+    private List<RevenueEntity> revenues;
     private Map<String, Integer> typesExpenses;
     private Map<String, Integer> typesRevenues;
 
@@ -44,10 +44,10 @@ public class UserDTO implements IUserDTO {
     public String getPin(){
         return pin;
     }
-    public List<Expense> getExpenses() {
+    public List<ExpenseEntity> getExpenses() {
         return expenses;
     }
-    public List<Revenue> getRevenues() {
+    public List<RevenueEntity> getRevenues() {
         return revenues;
     }
     public Map<String, Integer> getTypesExpenses() {

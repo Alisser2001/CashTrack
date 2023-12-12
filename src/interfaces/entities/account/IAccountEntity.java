@@ -1,8 +1,8 @@
 package interfaces.entities.account;
-import entities.user.User;
+import entities.user.UserEntity;
 import java.util.List;
 
-public interface IAccount {
+public interface IAccountEntity {
     int getAccountId();
     void setAccountId(int id);
     int getAdminId();
@@ -15,7 +15,7 @@ public interface IAccount {
     String getPassword();
     Double getBalance();
     void setBalance(Double balance);
-    List<User> getUsers();
-    void setUser(User user);
+    List<UserEntity> getUsers();
+    void setUser(UserEntity user);
     String toString();
 }

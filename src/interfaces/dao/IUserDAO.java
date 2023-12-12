@@ -9,4 +9,8 @@ public interface IUserDAO {
     UserDTO findByUsername(String username) throws DAOException;
     void createUser(UserDTO userDTO) throws DAOException;
     void deleteUser(UserDTO userDTO) throws DAOException;
+    void updateUsername(String username);
+    void updateEmail(String email);
+    void updatePin(String pin);
+    void updateAccountId(int id);
 }
