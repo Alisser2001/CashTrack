@@ -1,9 +1,9 @@
 package entities.money;
 
-import interfaces.entities.money.IMoney;
+import interfaces.entities.money.IMoneyEntity;
 import java.time.LocalDateTime;
 
-abstract class Money implements IMoney {
+abstract class MoneyEntity implements IMoneyEntity {
     private Double money;
     private String description;
     private LocalDateTime date_time;

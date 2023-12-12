@@ -1,12 +1,12 @@
 package entities.money;
 
-import interfaces.entities.money.IExpense;
+import interfaces.entities.money.IExpenseEntity;
 import java.time.LocalDateTime;
 
-public class Expense extends Money implements IExpense {
+public class ExpenseEntity extends MoneyEntity implements IExpenseEntity {
     private int expense_id;
-    public Expense() { }
-    public Expense(Double expense, String type, String description, int userId){
+    public ExpenseEntity() { }
+    public ExpenseEntity(Double expense, String type, String description, int userId){
         this.setMoney(expense);
         this.setDescription(description);
         this.setType(type);

@@ -1,33 +1,33 @@
 package entities.user;
 
-import entities.money.Expense;
-import entities.money.Revenue;
-import interfaces.entities.user.IUser;
+import entities.money.ExpenseEntity;
+import entities.money.RevenueEntity;
+import interfaces.entities.user.IUserEntity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class User implements IUser {
+public class UserEntity implements IUserEntity {
     private int id;
     private String username;
     private String email;
     private String pin;
     private int accountId;
-    private List<Expense> expenses;
-    private List<Revenue> revenues;
+    private List<ExpenseEntity> expenses;
+    private List<RevenueEntity> revenues;
     private Map<String, Integer> typesExpenses;
     private Map<String, Integer> typesRevenues;
 
-    public User(){ }
-    public User(String username){
+    public UserEntity(){ }
+    public UserEntity(String username){
         this.username = username;
     }
-    public User(int id, String username){
+    public UserEntity(int id, String username){
         this.id = id;
         this.username = username;
     }
-    public User(int id, String username, String email, String pin, int accId){
+    public UserEntity(int id, String username, String email, String pin, int accId){
         this.id = id;
         this.username = username;
         this.email = email;
@@ -68,7 +68,7 @@ public class User implements IUser {
         } else {
             typesRevenues.put(type, typesRevenues.get(type) + 1);
         }
-        this.revenues.add(new Revenue(amount, type, description, userId));
+        this.revenues.add(new RevenueEntity(amount, type, description, userId));
     }
 
     public void addExpense(Double amount, String type, String description, int userId) {
@@ -77,14 +77,14 @@ public class User implements IUser {
         } else {
             typesExpenses.put(type, typesExpenses.get(type) + 1);
         }
-        this.expenses.add(new Expense(amount, type, description, userId));
+        this.expenses.add(new ExpenseEntity(amount, type, description, userId));
     }
 
-    public List<Revenue> getRevenues(){
+    public List<RevenueEntity> getRevenues(){
         return revenues;
     }
 
-    public List<Expense> getExpenses(){
+    public List<ExpenseEntity> getExpenses(){
         return expenses;
     }
 

@@ -1,12 +1,12 @@
 package interfaces.entities.user;
 
-import entities.money.Expense;
-import entities.money.Revenue;
+import entities.money.ExpenseEntity;
+import entities.money.RevenueEntity;
 
 import java.util.List;
 import java.util.Map;
 
-public interface IUser {
+public interface IUserEntity {
     int getUserId();
     void setUserId(int id);
     String getUsername();
@@ -19,8 +19,8 @@ public interface IUser {
     int getAccountId();
     void addExpense(Double amount, String type, String description, int userId);
     void addRevenue(Double amount, String type, String description, int userId);
-    List<Revenue> getRevenues();
-    List<Expense> getExpenses();
+    List<RevenueEntity> getRevenues();
+    List<ExpenseEntity> getExpenses();
     Map<String, Integer> getTypesExpenses();
     Map<String, Integer> getTypesRevenues();
     String toString();

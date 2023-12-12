@@ -1,7 +1,7 @@
 package dao;
 
 import dao.dto.AccountDTO;
-import entities.account.Account;
+import entities.account.AccountEntity;
 import exceptions.DAOException;
 import interfaces.dao.IAccountDAO;
 
@@ -12,17 +12,25 @@ import java.sql.SQLException;
 
 public class AccountDAO implements IAccountDAO {
     private final Connection conn;
+    private static final String FIND_ACCOUNT_BY_ID = "SELECT * FROM accounts WHERE id = ?";
+    private static final String FIND_ACCOUNT_BY_ADMIN_ID = "SELECT * FROM accounts WHERE adminId = ?";
+    private static final String CREATE_ACCOUNT = "INSERT INTO accounts (accountName, adminId, description, password, balance) VALUES (?, ?, ?, ?, ?)";
+    private static final String DELETE_ACCOUNT = "DELETE FROM accounts WHERE id = ?";
+    private static final String DELETE_ACCOUNT_REVENUES = "DELETE FROM revenues WHERE userId IN (SELECT userId FROM users WHERE account = ?);";
+    private static final String DELETE_ACCOUNT_EXPENSES = "DELETE FROM expenses WHERE userId IN (SELECT userId FROM users WHERE account = ?);";
+    private static final String DELETE_ACCOUNT_ID_FROM_USERS = "UPDATE users SET account = NULL WHERE account = ?;";
+
     public AccountDAO(Connection connection) {
         this.conn = connection;
     }
     @Override
     public AccountDTO findById(int id) throws DAOException {
         try {
-            PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM accounts WHERE id = ?");
+            PreparedStatement preparedStatement = conn.prepareStatement(FIND_ACCOUNT_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                Account account = new Account();
+                AccountEntity account = new AccountEntity();
                 account.setAdminId(resultSet.getInt("adminId"));
                 account.setAccountId(resultSet.getInt("id"));
                 account.setAccountName(resultSet.getString("accountName"));
@@ -39,11 +47,11 @@ public class AccountDAO implements IAccountDAO {
     @Override
     public AccountDTO findByAdminId(int id) throws DAOException {
         try {
-            PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM accounts WHERE adminId = ?");
+            PreparedStatement preparedStatement = conn.prepareStatement(FIND_ACCOUNT_BY_ADMIN_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                Account account = new Account();
+                AccountEntity account = new AccountEntity();
                 account.setAdminId(resultSet.getInt("adminId"));
                 account.setAccountId(resultSet.getInt("id"));
                 account.setAccountName(resultSet.getString("accountName"));
@@ -59,7 +67,7 @@ public class AccountDAO implements IAccountDAO {
     }
     public void createAccount(AccountDTO accountDTO) throws DAOException {
         try{
-            PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO accounts (accountName, adminId, description, password, balance) VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement preparedStatement = conn.prepareStatement(CREATE_ACCOUNT);
             preparedStatement.setString(1, accountDTO.getAccountName());
             preparedStatement.setInt(2, accountDTO.getAdminId());
             preparedStatement.setString(3, accountDTO.getDescription());
@@ -73,14 +81,10 @@ public class AccountDAO implements IAccountDAO {
     }
     public void deleteAccount(AccountDTO account) throws DAOException {
         try{
-            PreparedStatement preparedStatement = conn.prepareStatement("DELETE FROM accounts WHERE id = ?");
-            PreparedStatement deleteRevenuesPreparedStatement = conn.prepareStatement("DELETE FROM revenues" +
-                    "WHERE userId IN (SELECT userId FROM users WHERE account = ?);");
-            PreparedStatement deleteExpensesPreparedStatement = conn.prepareStatement("DELETE FROM expenses" +
-                    "WHERE userId IN (SELECT userId FROM users WHERE account = ?);");
-            PreparedStatement deleteAccFromUsersPreparedStatement = conn.prepareStatement("UPDATE users" +
-                    "SET account = NULL" +
-                    "WHERE account = ?;");
+            PreparedStatement preparedStatement = conn.prepareStatement(DELETE_ACCOUNT);
+            PreparedStatement deleteRevenuesPreparedStatement = conn.prepareStatement(DELETE_ACCOUNT_REVENUES);
+            PreparedStatement deleteExpensesPreparedStatement = conn.prepareStatement(DELETE_ACCOUNT_EXPENSES);
+            PreparedStatement deleteAccFromUsersPreparedStatement = conn.prepareStatement(DELETE_ACCOUNT_ID_FROM_USERS);
             deleteRevenuesPreparedStatement.setInt(1, account.getId());
             deleteExpensesPreparedStatement.setInt(1, account.getId());
             deleteAccFromUsersPreparedStatement.setInt(1, account.getId());
@@ -93,5 +97,30 @@ public class AccountDAO implements IAccountDAO {
         } catch (SQLException e) {
             throw new DAOException("Error al encontrar la cuenta.", (SQLException) e);
         }
+    }
+
+    @Override
+    public void updateAccountName(String name) {
+
+    }
+
+    @Override
+    public void updateAdminId(int id) {
+
+    }
+
+    @Override
+    public void updateDescription(String description) {
+
+    }
+
+    @Override
+    public void updatePassword(String password) {
+
+    }
+
+    @Override
+    public void updateBalance(Float balance) {
+
     }
 }

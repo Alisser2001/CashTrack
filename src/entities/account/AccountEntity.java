@@ -1,25 +1,25 @@
 package entities.account;
 
-import interfaces.entities.account.IAccount;
-import entities.user.User;
+import interfaces.entities.account.IAccountEntity;
+import entities.user.UserEntity;
 import java.util.List;
 
-public class Account implements IAccount {
+public class AccountEntity implements IAccountEntity {
     private int id;
     private int adminId;
     private String name;
     private String description;
     private String password;
     private Double balance;
-    private List<User> users;
+    private List<UserEntity> users;
 
-    public Account(){ };
-    public Account(int adminId, String password){
+    public AccountEntity(){ };
+    public AccountEntity(int adminId, String password){
         this.balance = 0.0;
         this.adminId = adminId;
         this.password = password;
     }
-    public Account(int adminId, String password, Double balance){
+    public AccountEntity(int adminId, String password, Double balance){
         this.balance = balance;
         this.adminId = adminId;
         this.password = password;
@@ -66,10 +66,10 @@ public class Account implements IAccount {
     public void setBalance(Double balance){
         this.balance = balance;
     }
-    public List<User> getUsers(){
+    public List<UserEntity> getUsers(){
         return users;
     }
-    public void setUser(User user){
+    public void setUser(UserEntity user){
         this.users.add(user);
     }
     @Override

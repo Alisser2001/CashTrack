@@ -2,7 +2,7 @@ package interfaces.entities.money;
 
 import java.time.LocalDateTime;
 
-public interface IMoney {
+public interface IMoneyEntity {
     Double getMoney();
     void setMoney(Double money);
     String getDescription();

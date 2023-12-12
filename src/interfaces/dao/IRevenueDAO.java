@@ -7,4 +7,7 @@ public interface IRevenueDAO {
     RevenueDTO findById(int id) throws DAOException;
     void createRevenue(RevenueDTO revenueDTO) throws DAOException;
     void deleteRevenue(RevenueDTO revenueDTO) throws DAOException;
+    void updateAmount(Float amount);
+    void updateDescription(String description);
+    void updateType(String type);
 }

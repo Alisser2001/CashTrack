@@ -1,6 +1,6 @@
 package interfaces.dao.dto;
 
-import entities.user.User;
+import entities.user.UserEntity;
 import java.util.List;
 
 public interface IAccountDTO {
@@ -13,5 +13,5 @@ public interface IAccountDTO {
     // Métodos opcionales sólo en transferencia de información desde la DB a la capa de presentación
     int getId();
     String getPassword();
-    List<User> getUsers();
+    List<UserEntity> getUsers();
 }
