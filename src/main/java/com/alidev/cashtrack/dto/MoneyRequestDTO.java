@@ -2,7 +2,7 @@ package com.alidev.cashtrack.dto;
 
 import java.time.LocalDateTime;
 
-public interface MoneyDTO {
+public interface MoneyRequestDTO {
     Double getAmount();
     String getType();
     String getDescription();

@@ -1,125 +1,109 @@
 package com.alidev.cashtrack.repository.impl;
 
-import com.alidev.cashtrack.dto.RevenueDTO;
+import com.alidev.cashtrack.entity.RevenueEntity;
 import com.alidev.cashtrack.exception.RepositoryException;
 import com.alidev.cashtrack.repository.RevenueRepository;
+import com.alidev.cashtrack.util.RevenueMapper;
+import com.alidev.cashtrack.util.SQLSentences;
+import com.alidev.cashtrack.util.impl.RevenueMapperImpl;
+import com.alidev.cashtrack.util.impl.SQLSentencesImpl;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
 @Repository
 public class RevenueRepositoryImpl implements RevenueRepository {
     private final JdbcTemplate jdbcTemplate;
+    private SQLSentences sentences = new SQLSentencesImpl();
+    private RevenueMapper revenueMapper = new RevenueMapperImpl();
 
     public RevenueRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-    public RevenueDTO findById(int id) throws RepositoryException {
+    public RevenueEntity findById(int id) throws RepositoryException {
         try {
-            PreparedStatement preparedStatement = conn.prepareStatement(FIND_REVENUE_BY_ID);
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                RevenueEntity revenue = new RevenueEntity();
-                revenue.setRevenueId(resultSet.getInt("id"));
-                revenue.setMoney(resultSet.getDouble("amount"));
-                revenue.setType(resultSet.getString("type"));
-                revenue.setDescription(resultSet.getString("description"));
-                revenue.setUserId(resultSet.getInt("userId"));
-                revenue.setDateTime(resultSet.getTimestamp("date_time").toLocalDateTime());
-                preparedStatement.close();
-                return new RevenueDTO(revenue.getRevenueId(), revenue.getMoney(), revenue.getType(), revenue.getDescription(), revenue.getUserId(), revenue.getDateTime());
-            }
-        } catch (SQLException e) {
-            throw new DAOException("Error al encontrar el ingreso.", (SQLException) e);
-        }
-        return null;
-    }
-
-    @Override
-    public void createRevenue(RevenueDTO revenueDTO) throws RepositoryException {
-        try{
-            PreparedStatement preparedStatement = conn.prepareStatement(CREATE_REVENUE);
-            preparedStatement.setDouble(1, revenueDTO.getAmount());
-            preparedStatement.setString(2, revenueDTO.getDescription());
-            preparedStatement.setString(3, revenueDTO.getType());
-            Timestamp timestamp = Timestamp.valueOf(revenueDTO.getDateTime());
-            preparedStatement.setTimestamp(4, timestamp);
-            preparedStatement.setInt(5, revenueDTO.getUserId());
-            preparedStatement.executeUpdate();
-            PreparedStatement updateBalancePreparedStatement = conn.prepareStatement(UPDATE_BALANCE_ADD);
-            updateBalancePreparedStatement.setInt(1, revenueDTO.getRevenueId());
-            updateBalancePreparedStatement.setInt(2, revenueDTO.getRevenueId());
-            updateBalancePreparedStatement.executeUpdate();
-            updateBalancePreparedStatement.close();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            throw new DAOException("Error al encontrar la cuenta.", (SQLException) e);
+            String FIND_REVENUE_BY_ID = String.format(sentences.get_find_all_from_by_sentence(), "revenues", "id");
+            return jdbcTemplate.queryForObject(FIND_REVENUE_BY_ID,
+                    (resultSet, rowNum) -> revenueMapper.mapResultSetToRevenueEntity(resultSet),
+                    id);
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el ingreso.", (DataAccessException) e);
         }
     }
 
     @Override
-    public void deleteRevenue(RevenueDTO revenueDTO) throws RepositoryException {
+    public void createRevenue(RevenueEntity revenue) throws RepositoryException {
         try{
-            PreparedStatement preparedStatement = conn.prepareStatement(DELETE_REVENUE);
-            preparedStatement.setInt(1, revenueDTO.getRevenueId());
-            preparedStatement.executeUpdate();
-            PreparedStatement updateBalancePreparedStatement = conn.prepareStatement(UPDATE_BALANCE_REMOVE);
-            updateBalancePreparedStatement.setInt(1, revenueDTO.getRevenueId());
-            updateBalancePreparedStatement.setInt(2, revenueDTO.getRevenueId());
-            updateBalancePreparedStatement.executeUpdate();
-            updateBalancePreparedStatement.close();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            throw new DAOException("Error al encontrar la cuenta.", (SQLException) e);
+            String CREATE_REVENUE = String.format(sentences.get_create_money_sentence(), "revenues");
+            Timestamp timestamp = Timestamp.valueOf(revenue.getDateTime());
+            String UPDATE_BALANCE_ADD = String.format(sentences.get_update_balance_add_sentence(), "revenues", "revenues");
+            jdbcTemplate.update(CREATE_REVENUE,
+                    revenue.getAmount(),
+                    revenue.getDescription(),
+                    revenue.getType(),
+                    timestamp,
+                    revenue.getUserId());
+            jdbcTemplate.update(UPDATE_BALANCE_ADD,
+                    revenue.getRevenueId(),
+                    revenue.getRevenueId());
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el ingreso.", (DataAccessException) e);
+        }
+    }
+
+    @Override
+    public void deleteRevenue(RevenueEntity revenue) throws RepositoryException {
+        try{
+            String DELETE_REVENUE = String.format(sentences.get_delete_entity_sentence(), "revenues", "id");
+            String UPDATE_BALANCE_REMOVE = String.format(sentences.get_update_balance_remove_sentence(), "revenues", "revenues");
+            jdbcTemplate.update(DELETE_REVENUE,
+                    revenue.getRevenueId());
+            jdbcTemplate.update(UPDATE_BALANCE_REMOVE,
+                    revenue.getRevenueId(),
+                    revenue.getRevenueId());
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el ingreso.", (DataAccessException) e);
         }
     }
 
     @Override
     public void updateDescription(int id, String description) throws RepositoryException {
         try{
-            PreparedStatement preparedStatement = conn.prepareStatement(UPDATE_DESCRIPTION);
-            preparedStatement.setString(1, description);
-            preparedStatement.setInt(2, id);
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            throw new DAOException("Error al encontrar el gasto.", (SQLException) e);
+            String UPDATE_DESCRIPTION = String.format(sentences.get_update_value_sentence(), "revenues", "description", "id");
+            jdbcTemplate.update(UPDATE_DESCRIPTION,
+                    description,
+                    id);
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el ingreso.", (DataAccessException) e);
         }
     }
 
     @Override
     public void updateType(int id, String type) throws RepositoryException {
         try{
-            PreparedStatement preparedStatement = conn.prepareStatement(UPDATE_TYPE);
-            preparedStatement.setString(1, type);
-            preparedStatement.setInt(2, id);
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            throw new DAOException("Error al encontrar el gasto.", (SQLException) e);
+            String UPDATE_TYPE = String.format(sentences.get_update_value_sentence(), "revenues", "type", "id");
+            jdbcTemplate.update(UPDATE_TYPE,
+                    type,
+                    id);
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el ingreso.", (DataAccessException) e);
         }
     }
 
     @Override
-    public List<RevenueDTO> getRevenuesByUserId(int userId) throws RepositoryException {
+    public List<RevenueEntity> getRevenuesByUserId(int userId) throws RepositoryException {
         try {
-            List<RevenueEntity> revenueEntities = new ArrayList<>();
-            List<RevenueDTO> revenueDTOs = new ArrayList<>();
-            PreparedStatement preparedStatement = conn.prepareStatement(GET_REVENUES_BY_USER_ID);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                RevenueEntity revenueEntity = mapResultSetToRevenueEntity(resultSet);
-                revenueEntities.add(revenueEntity);
-            }
-            revenueDTOs = mapRevenueEntitiesToDTOs(revenueEntities);
-            return revenueDTOs;
-        } catch (SQLException e) {
-            throw new DAOException("Error al encontrar los gastos", (SQLException) e);
+            String GET_REVENUES_BY_USER_ID = String.format(sentences.get_all_from_by_sentence(), "revenues", "userId");
+            return jdbcTemplate.queryForObject(GET_REVENUES_BY_USER_ID,
+                    (resultSet, rowNum) -> revenueMapper.mapResultSetToRevenuesEntities(resultSet),
+                    userId);
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el ingreso.", (DataAccessException) e);
         }
     }
 

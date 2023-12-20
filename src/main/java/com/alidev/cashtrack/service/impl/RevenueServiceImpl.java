@@ -1,8 +1,8 @@
 package com.alidev.cashtrack.service.impl;
 
-import com.alidev.cashtrack.dto.RevenueDTO;
+import com.alidev.cashtrack.dto.MoneyRequestDTO;
+import com.alidev.cashtrack.dto.RevenueResponseDTO;
 import com.alidev.cashtrack.exception.RepositoryException;
-import com.alidev.cashtrack.repository.AccountRepository;
 import com.alidev.cashtrack.repository.RevenueRepository;
 import com.alidev.cashtrack.service.RevenueService;
 import org.springframework.stereotype.Service;
@@ -19,17 +19,17 @@ public class RevenueServiceImpl implements RevenueService {
     }
 
     @Override
-    public RevenueDTO findById(int id) throws RepositoryException {
+    public RevenueResponseDTO findById(int id) throws RepositoryException {
         return null;
     }
 
     @Override
-    public void createRevenue(RevenueDTO revenueDTO) throws RepositoryException {
+    public void createRevenue(MoneyRequestDTO revenueDTO) throws RepositoryException {
 
     }
 
     @Override
-    public void deleteRevenue(RevenueDTO revenueDTO) throws RepositoryException {
+    public void deleteRevenue(MoneyRequestDTO revenueDTO) throws RepositoryException {
 
     }
 
@@ -44,7 +44,7 @@ public class RevenueServiceImpl implements RevenueService {
     }
 
     @Override
-    public List<RevenueDTO> getRevenuesByUserId(int userId) throws RepositoryException {
+    public List<RevenueResponseDTO> getRevenuesByUserId(int userId) throws RepositoryException {
         return null;
     }
 

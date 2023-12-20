@@ -1,136 +1,118 @@
 package com.alidev.cashtrack.repository.impl;
 
-import com.alidev.cashtrack.dto.ExpenseDTO;
+import com.alidev.cashtrack.entity.ExpenseEntity;
+import com.alidev.cashtrack.exception.ExpenseException;
 import com.alidev.cashtrack.exception.RepositoryException;
 import com.alidev.cashtrack.repository.ExpenseRepository;
+import com.alidev.cashtrack.util.ExpenseMapper;
+import com.alidev.cashtrack.util.SQLSentences;
+import com.alidev.cashtrack.util.impl.ExpenseMapperImpl;
+import com.alidev.cashtrack.util.impl.SQLSentencesImpl;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
 @Repository
 public class ExpenseRepositoryImpl implements ExpenseRepository {
     private final JdbcTemplate jdbcTemplate;
+    private SQLSentences sentences = new SQLSentencesImpl();
+    private ExpenseMapper expenseMapper = new ExpenseMapperImpl();
 
     public ExpenseRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-    public ExpenseDTO findById(int id) throws RepositoryException {
+    public ExpenseEntity findById(int id) throws RepositoryException {
         try {
-            PreparedStatement preparedStatement = conn.prepareStatement(FIND_EXPENSE_BY_ID);
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                ExpenseEntity expense = new ExpenseEntity();
-                expense.setExpenseId(resultSet.getInt("id"));
-                expense.setMoney(resultSet.getDouble("amount"));
-                expense.setType(resultSet.getString("type"));
-                expense.setDescription(resultSet.getString("description"));
-                expense.setUserId(resultSet.getInt("userId"));
-                expense.setDateTime(resultSet.getTimestamp("date_time").toLocalDateTime());
-                preparedStatement.close();
-                return new ExpenseDTO(expense.getExpenseId(), expense.getMoney(), expense.getType(), expense.getDescription(), expense.getUserId(), expense.getDateTime());
-            }
-        } catch (SQLException e) {
-            throw new DAOException("Error al encontrar el gasto.", (SQLException) e);
+            String FIND_EXPENSE_BY_ID = String.format(sentences.get_find_all_from_by_sentence(), "expenses", "id");
+            return jdbcTemplate.queryForObject(FIND_EXPENSE_BY_ID,
+                    (resultSet, rowNum) -> expenseMapper.mapResultSetToExpenseEntity(resultSet),
+                    id);
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el gasto.", (DataAccessException) e);
         }
-        return null;
     }
 
     @Override
-    public void createExpense(ExpenseDTO expenseDTO) throws RepositoryException {
+    public void createExpense(ExpenseEntity expense) throws RepositoryException {
         try{
-            PreparedStatement getBalancePreparedStatement = conn.prepareStatement(GET_ACCOUNT_BALANCE);
-            getBalancePreparedStatement.setInt(1, expenseDTO.getExpenseId());
-            ResultSet accResultSet = getBalancePreparedStatement.executeQuery();
-            double accBalance = accResultSet.getDouble("balance");
-            getBalancePreparedStatement.close();
-            if (accBalance < expenseDTO.getAmount()){
-                throw new ExpenseException("No se poseen fondos suficientes. Saldo: " + accBalance);
+            String GET_ACCOUNT_BALANCE = sentences.get_account_balance_sentence();
+            Timestamp timestamp = Timestamp.valueOf(expense.getDateTime());
+            Double balance = jdbcTemplate.queryForObject(GET_ACCOUNT_BALANCE, Double.class, expense.getExpenseId());
+            if (balance < expense.getAmount()){
+                throw new ExpenseException("No se poseen fondos suficientes. Saldo: " + balance);
             } else {
-                PreparedStatement preparedStatement = conn.prepareStatement(CREATE_EXPENSE);
-                preparedStatement.setDouble(1, expenseDTO.getAmount());
-                preparedStatement.setString(2, expenseDTO.getDescription());
-                preparedStatement.setString(3, expenseDTO.getType());
-                Timestamp timestamp = Timestamp.valueOf(expenseDTO.getDateTime());
-                preparedStatement.setTimestamp(4, timestamp);
-                preparedStatement.setInt(5, expenseDTO.getUserId());
-                preparedStatement.executeUpdate();
-                PreparedStatement updateBalancePreparedStatement = conn.prepareStatement(UPDATE_BALANCE_REMOVE);
-                updateBalancePreparedStatement.setInt(1, expenseDTO.getExpenseId());
-                updateBalancePreparedStatement.setInt(2, expenseDTO.getExpenseId());
-                updateBalancePreparedStatement.executeUpdate();
-                updateBalancePreparedStatement.close();
-                preparedStatement.close();
+                String CREATE_EXPENSE = String.format(sentences.get_create_money_sentence(), "expenses");
+                jdbcTemplate.update(CREATE_EXPENSE,
+                        expense.getAmount(),
+                        expense.getDescription(),
+                        expense.getType(),
+                        timestamp,
+                        expense.getUserId());
+                String UPDATE_BALANCE_REMOVE = String.format(sentences.get_update_balance_remove_sentence(), "expenses", "expenses");
+                jdbcTemplate.update(UPDATE_BALANCE_REMOVE,
+                        expense.getExpenseId(),
+                        expense.getExpenseId());
             }
-        } catch (SQLException e) {
-            throw new DAOException("Error al crear el gasto.", (SQLException) e);
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el gasto.", (DataAccessException) e);
         } catch (ExpenseException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void deleteExpense(ExpenseDTO expenseDTO) throws RepositoryException {
+    public void deleteExpense(ExpenseEntity expense) throws RepositoryException {
         try{
-            PreparedStatement preparedStatement = conn.prepareStatement(DELETE_EXPENSE);
-            preparedStatement.setInt(1, expenseDTO.getExpenseId());
-            preparedStatement.executeUpdate();
-            PreparedStatement updateBalancePreparedStatement = conn.prepareStatement(UPDATE_BALANCE_ADD);
-            updateBalancePreparedStatement.setInt(1, expenseDTO.getExpenseId());
-            updateBalancePreparedStatement.setInt(2, expenseDTO.getExpenseId());
-            updateBalancePreparedStatement.executeUpdate();
-            updateBalancePreparedStatement.close();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            throw new DAOException("Error al borrar el gasto.", (SQLException) e);
+            String DELETE_EXPENSE = String.format(sentences.get_delete_entity_sentence(), "expenses", "id");
+            String UPDATE_BALANCE_ADD = String.format(sentences.get_update_balance_add_sentence(), "expenses", "expenses");
+            jdbcTemplate.update(DELETE_EXPENSE,
+                    expense.getExpenseId());
+            jdbcTemplate.update(UPDATE_BALANCE_ADD,
+                    expense.getExpenseId(),
+                    expense.getExpenseId());
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el gasto.", (DataAccessException) e);
         }
     }
 
     @Override
     public void updateDescription(int id, String description) throws RepositoryException {
         try{
-            PreparedStatement preparedStatement = conn.prepareStatement(UPDATE_DESCRIPTION);
-            preparedStatement.setString(1, description);
-            preparedStatement.setInt(2, id);
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            throw new DAOException("Error al encontrar el gasto.", (SQLException) e);
+            String UPDATE_DESCRIPTION = String.format(sentences.get_update_value_sentence(), "expenses", "description", "id");
+            jdbcTemplate.update(UPDATE_DESCRIPTION,
+                    description,
+                    id);
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el gasto.", (DataAccessException) e);
         }
     }
 
     @Override
     public void updateType(int id, String type) throws RepositoryException {
         try{
-            PreparedStatement preparedStatement = conn.prepareStatement(UPDATE_TYPE);
-            preparedStatement.setString(1, type);
-            preparedStatement.setInt(2, id);
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            throw new DAOException("Error al encontrar el gasto.", (SQLException) e);
+            String UPDATE_TYPE = String.format(sentences.get_update_value_sentence(), "expenses", "type", "id");
+            jdbcTemplate.update(UPDATE_TYPE,
+                    type,
+                    id);
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el gasto.", (DataAccessException) e);
         }
     }
 
     @Override
-    public List<ExpenseDTO> getExpensesByUserId(int userId) throws RepositoryException {
+    public List<ExpenseEntity> getExpensesByUserId(int userId) throws RepositoryException {
         try {
-            List<ExpenseEntity> expenseEntities = new ArrayList<>();
-            List<ExpenseDTO> expenseDTOs = new ArrayList<>();
-            PreparedStatement preparedStatement = conn.prepareStatement(GET_EXPENSES_BY_USER_ID);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                ExpenseEntity expenseEntity = mapResultSetToExpenseEntity(resultSet);
-                expenseEntities.add(expenseEntity);
-            }
-            expenseDTOs = mapExpenseEntitiesToDTOs(expenseEntities);
-            return expenseDTOs;
-        } catch (SQLException e) {
-            throw new DAOException("Error al encontrar los gastos", (SQLException) e);
+            String GET_EXPENSES_BY_USER_ID = String.format(sentences.get_all_from_by_sentence(), "expenses", "userId");
+            return jdbcTemplate.queryForObject(GET_EXPENSES_BY_USER_ID,
+                    (resultSet, rowNum) -> expenseMapper.mapResultSetToExpensesEntities(resultSet),
+                    userId);
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el gasto.", (DataAccessException) e);
         }
     }
 

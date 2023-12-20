@@ -1,8 +1,8 @@
 package com.alidev.cashtrack.service.impl;
 
-import com.alidev.cashtrack.dto.ExpenseDTO;
+import com.alidev.cashtrack.dto.ExpenseResponseDTO;
+import com.alidev.cashtrack.dto.MoneyRequestDTO;
 import com.alidev.cashtrack.exception.RepositoryException;
-import com.alidev.cashtrack.repository.AccountRepository;
 import com.alidev.cashtrack.repository.ExpenseRepository;
 import com.alidev.cashtrack.service.ExpenseService;
 import org.springframework.stereotype.Service;
@@ -19,17 +19,17 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public ExpenseDTO findById(int id) throws RepositoryException {
+    public ExpenseResponseDTO findById(int id) throws RepositoryException {
         return null;
     }
 
     @Override
-    public void createExpense(ExpenseDTO expenseDTO) throws RepositoryException {
+    public void createExpense(MoneyRequestDTO expenseDTO) throws RepositoryException {
 
     }
 
     @Override
-    public void deleteExpense(ExpenseDTO expenseDTO) throws RepositoryException {
+    public void deleteExpense(MoneyRequestDTO expenseDTO) throws RepositoryException {
 
     }
 
@@ -44,7 +44,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public List<ExpenseDTO> getExpensesByUserId(int userId) throws RepositoryException {
+    public List<ExpenseResponseDTO> getExpensesByUserId(int userId) throws RepositoryException {
         return null;
     }
 

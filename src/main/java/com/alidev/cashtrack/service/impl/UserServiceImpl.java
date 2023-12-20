@@ -1,6 +1,7 @@
 package com.alidev.cashtrack.service.impl;
 
-import com.alidev.cashtrack.dto.UserDTO;
+import com.alidev.cashtrack.dto.UserRequestDTO;
+import com.alidev.cashtrack.dto.UserResponseDTO;
 import com.alidev.cashtrack.exception.RepositoryException;
 import com.alidev.cashtrack.service.UserService;
 import org.springframework.stereotype.Service;
@@ -10,27 +11,27 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     @Override
-    public UserDTO findById(int id) throws RepositoryException {
+    public UserResponseDTO findById(int id) throws RepositoryException {
         return null;
     }
 
     @Override
-    public UserDTO findByEmail(String email) throws RepositoryException {
+    public UserResponseDTO findByEmail(String email) throws RepositoryException {
         return null;
     }
 
     @Override
-    public UserDTO findByUsername(String username) throws RepositoryException {
+    public UserResponseDTO findByUsername(String username) throws RepositoryException {
         return null;
     }
 
     @Override
-    public void createUser(UserDTO userDTO) throws RepositoryException {
+    public void createUser(UserRequestDTO userDTO) throws RepositoryException {
 
     }
 
     @Override
-    public void deleteUser(UserDTO userDTO) throws RepositoryException {
+    public void deleteUser(UserRequestDTO userDTO) throws RepositoryException {
 
     }
 
@@ -55,7 +56,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> getUsersByAccountId(int id) throws RepositoryException {
+    public List<UserResponseDTO> getUsersByAccountId(int id) throws RepositoryException {
         return null;
     }
 }

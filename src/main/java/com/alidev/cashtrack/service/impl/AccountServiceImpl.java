@@ -1,6 +1,7 @@
 package com.alidev.cashtrack.service.impl;
 
-import com.alidev.cashtrack.dto.AccountDTO;
+import com.alidev.cashtrack.dto.AccountRequestDTO;
+import com.alidev.cashtrack.dto.AccountResponseDTO;
 import com.alidev.cashtrack.exception.RepositoryException;
 import com.alidev.cashtrack.repository.AccountRepository;
 import com.alidev.cashtrack.service.AccountService;
@@ -15,22 +16,22 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountDTO findById(int id) throws RepositoryException {
+    public AccountResponseDTO findById(int id) throws RepositoryException {
         return null;
     }
 
     @Override
-    public AccountDTO findByAdminId(int id) throws RepositoryException {
+    public AccountResponseDTO findByAdminId(int id) throws RepositoryException {
         return null;
     }
 
     @Override
-    public void createAccount(AccountDTO accountDTO) throws RepositoryException {
+    public void createAccount(AccountRequestDTO accountDTO) throws RepositoryException {
 
     }
 
     @Override
-    public void deleteAccount(AccountDTO accountDTO) throws RepositoryException {
+    public void deleteAccount(AccountRequestDTO accountDTO) throws RepositoryException {
 
     }
 
