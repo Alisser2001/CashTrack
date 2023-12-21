@@ -49,6 +49,8 @@ public class AccountRepositoryImpl implements AccountRepository {
     public void createAccount(AccountEntity account) throws RepositoryException {
         try{
             String CREATE_ACCOUNT = sentences.get_create_account_sentence();
+            System.out.printf(CREATE_ACCOUNT);
+            System.out.printf(account.toString());
             jdbcTemplate.update(CREATE_ACCOUNT,
                     account.getAccountName(),
                     account.getAdminId(),
@@ -56,27 +58,27 @@ public class AccountRepositoryImpl implements AccountRepository {
                     account.getPassword(),
                     account.getBalance());
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar la cuenta.", (DataAccessException) e);
+            throw new RepositoryException("Error al crear la cuenta: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
     @Override
-    public void deleteAccount(AccountEntity account) throws RepositoryException {
+    public void deleteAccount(int id) throws RepositoryException {
         try{
             String DELETE_ACCOUNT = String.format(sentences.get_delete_entity_sentence(), "accounts", "id");
             String DELETE_ACCOUNT_REVENUES = sentences.get_delete_account_revenues_sentence();
             String DELETE_ACCOUNT_EXPENSES = sentences.get_delete_account_expenses_sentence();
             String DELETE_ACCOUNT_ID_FROM_USERS = sentences.get_delete_account_id_from_users_sentence();
             jdbcTemplate.update(DELETE_ACCOUNT,
-                    account.getAccountId());
+                    id);
             jdbcTemplate.update(DELETE_ACCOUNT_REVENUES,
-                    account.getAccountId());
+                    id);
             jdbcTemplate.update(DELETE_ACCOUNT_EXPENSES,
-                    account.getAccountId());
+                    id);
             jdbcTemplate.update(DELETE_ACCOUNT_ID_FROM_USERS,
-                    account.getAccountId());
+                    id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar la cuenta.", (DataAccessException) e);
+            throw new RepositoryException("Error al encontrar la cuenta: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -88,7 +90,7 @@ public class AccountRepositoryImpl implements AccountRepository {
                     name,
                     id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar la cuenta.", (DataAccessException) e);
+            throw new RepositoryException("Error al encontrar la cuenta: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -100,7 +102,7 @@ public class AccountRepositoryImpl implements AccountRepository {
                     id,
                     accId);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar la cuenta.", (DataAccessException) e);
+            throw new RepositoryException("Error al encontrar la cuenta: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -112,7 +114,7 @@ public class AccountRepositoryImpl implements AccountRepository {
                     description,
                     id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar la cuenta.", (DataAccessException) e);
+            throw new RepositoryException("Error al encontrar la cuenta: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -124,7 +126,7 @@ public class AccountRepositoryImpl implements AccountRepository {
                     password,
                     id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar la cuenta.", (DataAccessException) e);
+            throw new RepositoryException("Error al encontrar la cuenta: " + e.getMessage(), (DataAccessException) e);
         }
     }
 }

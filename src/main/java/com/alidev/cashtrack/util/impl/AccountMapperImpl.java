@@ -5,6 +5,7 @@ import com.alidev.cashtrack.dto.AccountResponseDTO;
 import com.alidev.cashtrack.dto.impl.AccountResponseDTOImpl;
 import com.alidev.cashtrack.entity.AccountEntity;
 import com.alidev.cashtrack.entity.impl.AccountEntityImpl;
+import com.alidev.cashtrack.exception.RepositoryException;
 import com.alidev.cashtrack.util.AccountMapper;
 import org.springframework.dao.DataAccessException;
 import java.sql.ResultSet;
@@ -59,8 +60,19 @@ public class AccountMapperImpl implements AccountMapper {
     }
 
     @Override
-    public List<AccountEntity> mapResulSetToAccountsEntities(ResultSet resultSet) {
-        return null;
+    public List<AccountEntity> mapResulSetToAccountsEntities(ResultSet resultSet) throws RepositoryException {
+        try{
+            List<AccountEntity> accountEntities = new ArrayList<>();
+            while (resultSet.next()) {
+                AccountEntity account = mapResultSetToAccountEntity(resultSet);
+                accountEntities.add(account);
+            }
+            return accountEntities;
+        } catch(DataAccessException e){
+            throw new RepositoryException("Error al mapear el resultado.", (DataAccessException) e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

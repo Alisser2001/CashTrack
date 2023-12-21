@@ -11,6 +11,7 @@ public class MoneyRequestDTOImpl implements MoneyRequestDTO {
     private int userId;
     private LocalDateTime dateTime;
 
+    public MoneyRequestDTOImpl(){};
     public MoneyRequestDTOImpl(Double amount, String type, String description, int userId, LocalDateTime dateTime){
         this.amount = amount;
         this.type = type;

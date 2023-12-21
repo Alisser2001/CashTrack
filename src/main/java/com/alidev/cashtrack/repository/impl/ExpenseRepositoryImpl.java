@@ -33,7 +33,7 @@ public class ExpenseRepositoryImpl implements ExpenseRepository {
                     (resultSet, rowNum) -> expenseMapper.mapResultSetToExpenseEntity(resultSet),
                     id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el gasto.", (DataAccessException) e);
+            throw new RepositoryException("Error al encontrar el gasto: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -59,24 +59,24 @@ public class ExpenseRepositoryImpl implements ExpenseRepository {
                         expense.getExpenseId());
             }
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el gasto.", (DataAccessException) e);
+            throw new RepositoryException("Error al encontrar el gasto: " + e.getMessage(), (DataAccessException) e);
         } catch (ExpenseException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void deleteExpense(ExpenseEntity expense) throws RepositoryException {
+    public void deleteExpense(int id) throws RepositoryException {
         try{
             String DELETE_EXPENSE = String.format(sentences.get_delete_entity_sentence(), "expenses", "id");
             String UPDATE_BALANCE_ADD = String.format(sentences.get_update_balance_add_sentence(), "expenses", "expenses");
             jdbcTemplate.update(DELETE_EXPENSE,
-                    expense.getExpenseId());
+                    id);
             jdbcTemplate.update(UPDATE_BALANCE_ADD,
-                    expense.getExpenseId(),
-                    expense.getExpenseId());
+                    id,
+                    id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el gasto.", (DataAccessException) e);
+            throw new RepositoryException("Error al encontrar el gasto: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -88,7 +88,7 @@ public class ExpenseRepositoryImpl implements ExpenseRepository {
                     description,
                     id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el gasto.", (DataAccessException) e);
+            throw new RepositoryException("Error al encontrar el gasto: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -100,7 +100,7 @@ public class ExpenseRepositoryImpl implements ExpenseRepository {
                     type,
                     id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el gasto.", (DataAccessException) e);
+            throw new RepositoryException("Error al encontrar el gasto: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -109,10 +109,16 @@ public class ExpenseRepositoryImpl implements ExpenseRepository {
         try {
             String GET_EXPENSES_BY_USER_ID = String.format(sentences.get_all_from_by_sentence(), "expenses", "userId");
             return jdbcTemplate.queryForObject(GET_EXPENSES_BY_USER_ID,
-                    (resultSet, rowNum) -> expenseMapper.mapResultSetToExpensesEntities(resultSet),
+                    (resultSet, rowNum) -> {
+                        try {
+                            return expenseMapper.mapResultSetToExpensesEntities(resultSet);
+                        } catch (RepositoryException e) {
+                            throw new RuntimeException(e);
+                        }
+                    },
                     userId);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el gasto.", (DataAccessException) e);
+            throw new RepositoryException("Error al encontrar el gasto: " + e.getMessage(), (DataAccessException) e);
         }
     }
 

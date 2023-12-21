@@ -2,6 +2,7 @@ package com.alidev.cashtrack.util;
 import com.alidev.cashtrack.dto.UserRequestDTO;
 import com.alidev.cashtrack.dto.UserResponseDTO;
 import com.alidev.cashtrack.entity.UserEntity;
+import com.alidev.cashtrack.exception.RepositoryException;
 import org.springframework.dao.DataAccessException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +12,7 @@ public interface UserMapper {
     UserEntity mapResultSetToUserEntity(ResultSet resultSet) throws DataAccessException, SQLException;
     UserEntity mapUserDTOToUserEntity(UserRequestDTO userDTO);
     UserResponseDTO mapUserEntityToUserDTO(UserEntity userEntity);
-    List<UserEntity> mapResultSetToUsersEntities(ResultSet resultSet);
+    List<UserEntity> mapResultSetToUsersEntities(ResultSet resultSet) throws RepositoryException;
     List<UserEntity> mapUsersDTOsToUsersEntities(List<UserRequestDTO> usersDTOs);
     List<UserResponseDTO> mapUsersEntitiesToUsersDTOs(List<UserEntity> usersEntities);
 }

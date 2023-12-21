@@ -8,9 +8,11 @@ public class AccountRequestDTOImpl implements AccountRequestDTO {
     private String accountName;
     private String password;
     private Double balance;
-    public AccountRequestDTOImpl(int adminId, String accName, String description, String password, Double balance) {
+
+    public AccountRequestDTOImpl(){};
+    public AccountRequestDTOImpl(int adminId, String accountName, String description, String password, Double balance) {
         this.adminId = adminId;
-        this.accountName = accName;
+        this.accountName = accountName;
         this.description = description;
         this.password = password;
         this.balance = balance;

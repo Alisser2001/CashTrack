@@ -2,6 +2,7 @@ package com.alidev.cashtrack.util;
 import com.alidev.cashtrack.dto.ExpenseResponseDTO;
 import com.alidev.cashtrack.dto.MoneyRequestDTO;
 import com.alidev.cashtrack.entity.ExpenseEntity;
+import com.alidev.cashtrack.exception.RepositoryException;
 import org.springframework.dao.DataAccessException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +12,7 @@ public interface ExpenseMapper {
     ExpenseEntity mapResultSetToExpenseEntity(ResultSet resultSet) throws DataAccessException, SQLException;
     ExpenseEntity mapExpenseDTOToExpenseEntity(MoneyRequestDTO expenseDTO);
     ExpenseResponseDTO mapExpenseEntityToExpenseDTO(ExpenseEntity expenseEntity);
-    List<ExpenseEntity> mapResultSetToExpensesEntities(ResultSet resultSet);
+    List<ExpenseEntity> mapResultSetToExpensesEntities(ResultSet resultSet) throws RepositoryException;
     List<ExpenseEntity> mapExpensesDTOsToExpensesEntities(List<MoneyRequestDTO> expensesDTOs);
     List<ExpenseResponseDTO> mapExpensesEntitiesToExpensesDTOs(List<ExpenseEntity> expensesEntities);
 }

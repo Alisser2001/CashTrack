@@ -6,8 +6,12 @@ import java.util.List;
 
 public interface AccountRequestDTO {
     String getAccountName();
+
     String getDescription();
+
     Double getBalance();
+
     int getAdminId();
+
     String getPassword();
 }

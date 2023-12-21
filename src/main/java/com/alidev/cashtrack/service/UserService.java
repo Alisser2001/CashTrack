@@ -11,9 +11,10 @@ public interface UserService {
     UserResponseDTO findByEmail(String email) throws RepositoryException;
     UserResponseDTO findByUsername(String username) throws RepositoryException;
     void createUser(UserRequestDTO userDTO) throws RepositoryException;
-    void deleteUser(UserRequestDTO userDTO) throws RepositoryException;
-    void updateUsername(int id, String username) throws RepositoryException;
-    void updateEmail(int id, String email) throws RepositoryException;    void updatePin(int id, String pin) throws RepositoryException;
-    void updateAccountId(int userId, int accId) throws RepositoryException;
+    void deleteUser(int id) throws RepositoryException;
+    void updateUsername(int id, UserRequestDTO user) throws RepositoryException;
+    void updateEmail(int id, UserRequestDTO user) throws RepositoryException;
+    void updatePin(int id, UserRequestDTO user) throws RepositoryException;
+    void updateAccountId(int id, UserRequestDTO user) throws RepositoryException;
     List<UserResponseDTO> getUsersByAccountId(int id) throws RepositoryException;
 }

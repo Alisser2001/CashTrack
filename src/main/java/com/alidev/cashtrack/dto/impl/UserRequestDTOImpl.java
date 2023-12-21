@@ -12,10 +12,12 @@ public class UserRequestDTOImpl implements UserRequestDTO {
     private String email;
     private int accountId;
     private String pin;
-    public UserRequestDTOImpl(String username, String email, int accId, String pin) {
+
+    public UserRequestDTOImpl(){};
+    public UserRequestDTOImpl(String username, String email, int accountId, String pin) {
         this.username = username;
         this.email = email;
-        this.accountId = accId;
+        this.accountId = accountId;
         this.pin = pin;
     }
     @Override

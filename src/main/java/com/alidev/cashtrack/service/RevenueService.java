@@ -10,9 +10,9 @@ import java.util.Map;
 public interface RevenueService {
     RevenueResponseDTO findById(int id) throws RepositoryException;
     void createRevenue(MoneyRequestDTO revenue) throws RepositoryException;
-    void deleteRevenue(MoneyRequestDTO revenue) throws RepositoryException;
-    void updateDescription(int id, String description) throws RepositoryException;
-    void updateType(int id, String type) throws RepositoryException;
+    void deleteRevenue(int id) throws RepositoryException;
+    void updateDescription(int id, MoneyRequestDTO revenue) throws RepositoryException;
+    void updateType(int id, MoneyRequestDTO revenue) throws RepositoryException;
     List<RevenueResponseDTO> getRevenuesByUserId(int userId) throws RepositoryException;
     Map<String, Integer> getTypesRevenues() throws RepositoryException;
 }

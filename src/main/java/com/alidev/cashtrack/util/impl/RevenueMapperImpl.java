@@ -3,8 +3,10 @@ package com.alidev.cashtrack.util.impl;
 import com.alidev.cashtrack.dto.MoneyRequestDTO;
 import com.alidev.cashtrack.dto.RevenueResponseDTO;
 import com.alidev.cashtrack.dto.impl.RevenueResponseDTOImpl;
+import com.alidev.cashtrack.entity.ExpenseEntity;
 import com.alidev.cashtrack.entity.RevenueEntity;
 import com.alidev.cashtrack.entity.impl.RevenueEntityImpl;
+import com.alidev.cashtrack.exception.RepositoryException;
 import com.alidev.cashtrack.util.RevenueMapper;
 import org.springframework.dao.DataAccessException;
 
@@ -63,8 +65,19 @@ public class RevenueMapperImpl implements RevenueMapper {
     }
 
     @Override
-    public List<RevenueEntity> mapResultSetToRevenuesEntities(ResultSet resultSet) {
-        return null;
+    public List<RevenueEntity> mapResultSetToRevenuesEntities(ResultSet resultSet) throws RepositoryException {
+        try{
+            List<RevenueEntity> revenuesEntities = new ArrayList<>();
+            while (resultSet.next()) {
+                RevenueEntity revenue = mapResultSetToRevenueEntity(resultSet);
+                revenuesEntities.add(revenue);
+            }
+            return revenuesEntities;
+        } catch(DataAccessException e){
+            throw new RepositoryException("Error al mapear el resultado.", (DataAccessException) e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

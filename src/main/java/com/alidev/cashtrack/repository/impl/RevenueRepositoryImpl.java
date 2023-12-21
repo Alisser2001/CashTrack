@@ -32,7 +32,7 @@ public class RevenueRepositoryImpl implements RevenueRepository {
                     (resultSet, rowNum) -> revenueMapper.mapResultSetToRevenueEntity(resultSet),
                     id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el ingreso.", (DataAccessException) e);
+            throw new RepositoryException("Error al encontrar el ingreso: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -52,22 +52,22 @@ public class RevenueRepositoryImpl implements RevenueRepository {
                     revenue.getRevenueId(),
                     revenue.getRevenueId());
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el ingreso.", (DataAccessException) e);
+            throw new RepositoryException("Error al encontrar el ingreso: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
     @Override
-    public void deleteRevenue(RevenueEntity revenue) throws RepositoryException {
+    public void deleteRevenue(int id) throws RepositoryException {
         try{
             String DELETE_REVENUE = String.format(sentences.get_delete_entity_sentence(), "revenues", "id");
             String UPDATE_BALANCE_REMOVE = String.format(sentences.get_update_balance_remove_sentence(), "revenues", "revenues");
             jdbcTemplate.update(DELETE_REVENUE,
-                    revenue.getRevenueId());
+                    id);
             jdbcTemplate.update(UPDATE_BALANCE_REMOVE,
-                    revenue.getRevenueId(),
-                    revenue.getRevenueId());
+                    id,
+                    id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el ingreso.", (DataAccessException) e);
+            throw new RepositoryException("Error al encontrar el ingreso: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -79,7 +79,7 @@ public class RevenueRepositoryImpl implements RevenueRepository {
                     description,
                     id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el ingreso.", (DataAccessException) e);
+            throw new RepositoryException("Error al encontrar el ingreso: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -91,7 +91,7 @@ public class RevenueRepositoryImpl implements RevenueRepository {
                     type,
                     id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el ingreso.", (DataAccessException) e);
+            throw new RepositoryException("Error al encontrar el ingreso: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -100,10 +100,16 @@ public class RevenueRepositoryImpl implements RevenueRepository {
         try {
             String GET_REVENUES_BY_USER_ID = String.format(sentences.get_all_from_by_sentence(), "revenues", "userId");
             return jdbcTemplate.queryForObject(GET_REVENUES_BY_USER_ID,
-                    (resultSet, rowNum) -> revenueMapper.mapResultSetToRevenuesEntities(resultSet),
+                    (resultSet, rowNum) -> {
+                        try {
+                            return revenueMapper.mapResultSetToRevenuesEntities(resultSet);
+                        } catch (RepositoryException e) {
+                            throw new RuntimeException(e);
+                        }
+                    },
                     userId);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el ingreso.", (DataAccessException) e);
+            throw new RepositoryException("Error al encontrar el ingreso: " + e.getMessage(), (DataAccessException) e);
         }
     }
 

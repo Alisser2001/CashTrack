@@ -2,9 +2,12 @@ package com.alidev.cashtrack.util.impl;
 import com.alidev.cashtrack.dto.UserRequestDTO;
 import com.alidev.cashtrack.dto.UserResponseDTO;
 import com.alidev.cashtrack.dto.impl.UserResponseDTOImpl;
+import com.alidev.cashtrack.entity.ExpenseEntity;
 import com.alidev.cashtrack.entity.UserEntity;
 import com.alidev.cashtrack.entity.impl.UserEntityImpl;
+import com.alidev.cashtrack.exception.RepositoryException;
 import com.alidev.cashtrack.util.UserMapper;
+import org.apache.catalina.User;
 import org.springframework.dao.DataAccessException;
 
 import java.sql.ResultSet;
@@ -51,8 +54,19 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public List<UserEntity> mapResultSetToUsersEntities(ResultSet resultSet) {
-        return null;
+    public List<UserEntity> mapResultSetToUsersEntities(ResultSet resultSet) throws RepositoryException {
+        try{
+            List<UserEntity> userEntities = new ArrayList<>();
+            while (resultSet.next()) {
+                UserEntity user = mapResultSetToUserEntity(resultSet);
+                userEntities.add(user);
+            }
+            return userEntities;
+        } catch(DataAccessException e){
+            throw new RepositoryException("Error al mapear el resultado.", (DataAccessException) e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

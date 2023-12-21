@@ -1,6 +1,5 @@
 package com.alidev.cashtrack.repository;
 
-import com.alidev.cashtrack.dto.UserResponseDTO;
 import com.alidev.cashtrack.entity.UserEntity;
 import com.alidev.cashtrack.exception.RepositoryException;
 
@@ -11,7 +10,7 @@ public interface UserRepository {
     UserEntity findByEmail(String email) throws RepositoryException;
     UserEntity findByUsername(String username) throws RepositoryException;
     void createUser(UserEntity user) throws RepositoryException;
-    void deleteUser(UserEntity user) throws RepositoryException;
+    void deleteUser(int id) throws RepositoryException;
     void updateUsername(int id, String username) throws RepositoryException;
     void updateEmail(int id, String email) throws RepositoryException;
     void updatePin(int id, String pin) throws RepositoryException;
