@@ -1,56 +1,63 @@
 package com.alidev.cashtrack.service.impl;
 
-import com.alidev.cashtrack.dto.AccountDTO;
+import com.alidev.cashtrack.dto.AccountRequestDTO;
+import com.alidev.cashtrack.dto.AccountResponseDTO;
+import com.alidev.cashtrack.entity.AccountEntity;
 import com.alidev.cashtrack.exception.RepositoryException;
 import com.alidev.cashtrack.repository.AccountRepository;
 import com.alidev.cashtrack.service.AccountService;
+import com.alidev.cashtrack.util.AccountMapper;
+import com.alidev.cashtrack.util.impl.AccountMapperImpl;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
-
+    private AccountMapper accountMapper = new AccountMapperImpl();
     public AccountServiceImpl(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
     @Override
-    public AccountDTO findById(int id) throws RepositoryException {
-        return null;
+    public AccountResponseDTO findById(int id) throws RepositoryException {
+        AccountEntity accountEntity = accountRepository.findById(id);
+        return accountMapper.mapAccountEntityToAccountDTO(accountEntity);
     }
 
     @Override
-    public AccountDTO findByAdminId(int id) throws RepositoryException {
-        return null;
+    public AccountResponseDTO findByAdminId(int id) throws RepositoryException {
+        AccountEntity accountEntity = accountRepository.findByAdminId(id);
+        return accountMapper.mapAccountEntityToAccountDTO(accountEntity);
     }
 
     @Override
-    public void createAccount(AccountDTO accountDTO) throws RepositoryException {
-
+    public void createAccount(AccountRequestDTO accountDTO) throws RepositoryException {
+        AccountEntity accountEntity = accountMapper.mapAccountDTOToAccountEntity(accountDTO);
+        accountRepository.createAccount(accountEntity);
     }
 
     @Override
-    public void deleteAccount(AccountDTO accountDTO) throws RepositoryException {
-
+    public void deleteAccount(int id) throws RepositoryException {
+        accountRepository.deleteAccount(id);
     }
 
     @Override
-    public void updateAccountName(int id, String name) throws RepositoryException {
-
+    public void updateAccountName(int id, AccountRequestDTO account) throws RepositoryException {
+        accountRepository.updateAccountName(id, account.getAccountName());
     }
 
     @Override
-    public void updateAdminId(int accId, int id) throws RepositoryException {
-
+    public void updateAdminId(int id, AccountRequestDTO account) throws RepositoryException {
+        accountRepository.updateAdminId(id, account.getAdminId());
     }
 
     @Override
-    public void updateDescription(int id, String description) throws RepositoryException {
-
+    public void updateDescription(int id, AccountRequestDTO account) throws RepositoryException {
+        accountRepository.updateDescription(id, account.getDescription());
     }
 
     @Override
-    public void updatePassword(int id, String password) throws RepositoryException {
-
+    public void updatePassword(int id, AccountRequestDTO account) throws RepositoryException {
+        accountRepository.updatePassword(id, account.getPassword());
     }
 }

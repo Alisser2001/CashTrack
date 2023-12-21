@@ -1,34 +1,38 @@
 package com.alidev.cashtrack.dto.impl;
 
-import com.alidev.cashtrack.dto.MoneyDTO;
+import com.alidev.cashtrack.dto.MoneyRequestDTO;
 
 import java.time.LocalDateTime;
 
-abstract class MoneyDTOImpl implements MoneyDTO {
+public class MoneyRequestDTOImpl implements MoneyRequestDTO {
     private Double amount;
     private String type;
     private String description;
     private int userId;
     private LocalDateTime dateTime;
 
+    public MoneyRequestDTOImpl(){};
+    public MoneyRequestDTOImpl(Double amount, String type, String description, int userId, LocalDateTime dateTime){
+        this.amount = amount;
+        this.type = type;
+        this.description = description;
+        this.userId = userId;
+        this.dateTime = dateTime;
+    }
+
     public Double getAmount() {
         return amount;
     }
-    protected void setAmount(Double amount) { this.amount = amount; }
     public String getType() {
         return type;
     }
-    protected void setType(String type){ this.type = type; }
     public String getDescription() {
         return description;
     }
-    protected void setDescription(String description) { this.description = description; }
     public int getUserId() {
         return userId;
     }
-    protected  void setUserId(int userId) { this.userId = userId; }
     public LocalDateTime getDateTime() {
         return dateTime;
     }
-    protected void setDateTime(LocalDateTime dateTime) { this.dateTime = dateTime; }
 }

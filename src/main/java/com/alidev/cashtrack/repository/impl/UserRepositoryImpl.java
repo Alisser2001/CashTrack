@@ -1,8 +1,13 @@
 package com.alidev.cashtrack.repository.impl;
 
-import com.alidev.cashtrack.dto.UserDTO;
+import com.alidev.cashtrack.entity.UserEntity;
 import com.alidev.cashtrack.exception.RepositoryException;
 import com.alidev.cashtrack.repository.UserRepository;
+import com.alidev.cashtrack.util.SQLSentences;
+import com.alidev.cashtrack.util.UserMapper;
+import com.alidev.cashtrack.util.impl.SQLSentencesImpl;
+import com.alidev.cashtrack.util.impl.UserMapperImpl;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -11,165 +16,135 @@ import java.util.List;
 @Repository
 public class UserRepositoryImpl implements UserRepository {
     private final JdbcTemplate jdbcTemplate;
+    private SQLSentences sentences = new SQLSentencesImpl();
+    private UserMapper userMapper = new UserMapperImpl();
+
 
     public UserRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-    public UserDTO findById(int id) throws RepositoryException {
+    public UserEntity findById(int id) throws RepositoryException {
         try {
-            PreparedStatement preparedStatement = conn.prepareStatement(FIND_USER_BY_ID);
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                UserEntity user = new UserEntity();
-                user.setUserId(resultSet.getInt("id"));
-                user.setUsername(resultSet.getString("username"));
-                user.setEmail(resultSet.getString("email"));
-                user.setAccountId(resultSet.getInt("account"));
-                preparedStatement.close();
-                return new UserDTO(user.getUserId(), user.getUsername(), user.getEmail(), user.getAccountId());
-            }
-        } catch (SQLException e) {
-            throw new DAOException("Error al encontrar el usuario.", (SQLException) e);
+            String FIND_USER_BY_ID = String.format(sentences.get_find_all_from_by_sentence(), "users", "id");
+            return jdbcTemplate.queryForObject(FIND_USER_BY_ID,
+                    (resultSet, rowNum) -> userMapper.mapResultSetToUserEntity(resultSet),
+                    id);
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el ususario: " + e.getMessage(), (DataAccessException) e);
         }
-        return null;
     }
 
     @Override
-    public UserDTO findByEmail(String email) throws RepositoryException {
+    public UserEntity findByEmail(String email) throws RepositoryException {
         try {
-            PreparedStatement preparedStatement = conn.prepareStatement(FIND_USER_BY_EMAIL);
-            preparedStatement.setString(1, email);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                UserEntity user = new UserEntity();
-                user.setUserId(resultSet.getInt("id"));
-                user.setUsername(resultSet.getString("username"));
-                user.setEmail(resultSet.getString("email"));
-                user.setAccountId(resultSet.getInt("account"));
-                preparedStatement.close();
-                return new UserDTO(user.getUserId(), user.getUsername(), user.getEmail(), user.getAccountId());
-            }
-        } catch (SQLException e) {
-            throw new DAOException("Error al encontrar el usuario.", (SQLException) e);
+            String FIND_USER_BY_EMAIL = String.format(sentences.get_find_all_from_by_sentence(), "users", "email");
+            return jdbcTemplate.queryForObject(FIND_USER_BY_EMAIL,
+                    (resultSet, rowNum) -> userMapper.mapResultSetToUserEntity(resultSet),
+                    email);
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el ususario: " + e.getMessage(), (DataAccessException) e);
         }
-        return null;
     }
 
     @Override
-    public UserDTO findByUsername(String username) throws RepositoryException {
+    public UserEntity findByUsername(String username) throws RepositoryException {
         try {
-            PreparedStatement preparedStatement = conn.prepareStatement(FIND_USER_BY_USERNAME);
-            preparedStatement.setString(1, username);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                UserEntity user = new UserEntity();
-                user.setUserId(resultSet.getInt("id"));
-                user.setUsername(resultSet.getString("username"));
-                user.setEmail(resultSet.getString("email"));
-                user.setAccountId(resultSet.getInt("account"));
-                preparedStatement.close();
-                return new UserDTO(user.getUserId(), user.getUsername(), user.getEmail(), user.getAccountId());
-            }
-        } catch (SQLException e) {
-            throw new DAOException("Error al encontrar el usuario.", (SQLException) e);
+            String FIND_USER_BY_USERNAME = String.format(sentences.get_find_all_from_by_sentence(), "users", "username");
+            return jdbcTemplate.queryForObject(FIND_USER_BY_USERNAME,
+                    (resultSet, rowNum) -> userMapper.mapResultSetToUserEntity(resultSet),
+                    username);
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el ususario.: " + e.getMessage(), (DataAccessException) e);
         }
-        return null;
     }
 
     @Override
-    public void createUser(UserDTO userDTO) throws RepositoryException {
+    public void createUser(UserEntity user) throws RepositoryException {
         try{
-            PreparedStatement preparedStatement = conn.prepareStatement(CREATE_USER);
-            preparedStatement.setString(1, userDTO.getUsername());
-            preparedStatement.setString(2, userDTO.getEmail());
-            preparedStatement.setString(3, userDTO.getPin());
-            preparedStatement.setInt(4, userDTO.getAccountId());
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            throw new DAOException("Error al crear el usuario.", (SQLException) e);
+            String CREATE_USER = sentences.get_create_user_sentence();
+            jdbcTemplate.update(CREATE_USER,
+                    user.getUsername(),
+                    user.getEmail(),
+                    user.getPin(),
+                    user.getAccountId());
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el ususario: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
     @Override
-    public void deleteUser(UserDTO userDTO) throws RepositoryException {
+    public void deleteUser(int id) throws RepositoryException {
         try{
-            PreparedStatement preparedStatement = conn.prepareStatement(DELETE_USER);
-            PreparedStatement deleteRevenuesPreparedStatement = conn.prepareStatement(DELETE_REVENUES);
-            PreparedStatement deleteExpensesPreparedStatement = conn.prepareStatement(DELETE_EXPENSES);
-            deleteRevenuesPreparedStatement.setInt(1, userDTO.getId());
-            deleteExpensesPreparedStatement.setInt(1, userDTO.getId());
-            preparedStatement.setInt(1, userDTO.getId());
-            deleteRevenuesPreparedStatement.executeUpdate();
-            deleteExpensesPreparedStatement.executeUpdate();
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            throw new DAOException("Error al eliminar el usuario .", (SQLException) e);
+            String DELETE_USER = String.format(sentences.get_delete_entity_sentence(), "users", "id");
+            String DELETE_REVENUES = String.format(sentences.get_delete_entity_sentence(), "revenues", "userId");
+            String DELETE_EXPENSES = String.format(sentences.get_delete_entity_sentence(), "expenses", "userId");
+            jdbcTemplate.update(DELETE_USER,
+                    id);
+            jdbcTemplate.update(DELETE_REVENUES,
+                    id);
+            jdbcTemplate.update(DELETE_EXPENSES,
+                    id);
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el ususario: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
     @Override
     public void updateUsername(int id, String username) throws RepositoryException {
         try{
-            PreparedStatement preparedStatement = conn.prepareStatement(UPDATE_USER_NAME);
-            preparedStatement.setString(1, username);
-            preparedStatement.setInt(2, id);
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            throw new DAOException("Error al actualizar el nombre de usuario.", (SQLException) e);
+            String UPDATE_USER_NAME = String.format(sentences.get_update_value_sentence(), "users", "username", "id");
+            jdbcTemplate.update(UPDATE_USER_NAME,
+                    username,
+                    id);
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el ususario: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
     @Override
     public void updateEmail(int id, String email) throws RepositoryException {
         try{
-            PreparedStatement preparedStatement = conn.prepareStatement(UPDATE_EMAIL);
-            preparedStatement.setString(1, email);
-            preparedStatement.setInt(2, id);
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            throw new DAOException("Error al actualizar el email.", (SQLException) e);
+            String UPDATE_EMAIL = String.format(sentences.get_update_value_sentence(), "users", "email", "id");
+            jdbcTemplate.update(UPDATE_EMAIL,
+                    email,
+                    id);
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el ususario: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
     @Override
     public void updatePin(int id, String pin) throws RepositoryException {
         try{
-            PreparedStatement preparedStatement = conn.prepareStatement(UPDATE_PIN);
-            preparedStatement.setString(1, pin);
-            preparedStatement.setInt(2, id);
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            throw new DAOException("Error al actualizar el pin.", (SQLException) e);
+            String UPDATE_PIN = String.format(sentences.get_update_value_sentence(), "users", "pin", "id");
+            jdbcTemplate.update(UPDATE_PIN,
+                    pin,
+                    id);
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el ususario: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
     @Override
     public void updateAccountId(int userId, int accId) throws RepositoryException {
         try{
-            PreparedStatement preparedStatement = conn.prepareStatement(UPDATE_ACCOUNT_ID);
-            preparedStatement.setInt(1, accId);
-            preparedStatement.setInt(2, userId);
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            throw new DAOException("Error al actualizar la cuenta del usuario.", (SQLException) e);
+            String UPDATE_ACCOUNT_ID = String.format(sentences.get_update_value_sentence(), "users", "account", "id");
+            jdbcTemplate.update(UPDATE_ACCOUNT_ID,
+                    accId,
+                    userId);
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el ususario: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
     @Override
-    public List<UserDTO> getUsersByAccountId(int id) throws RepositoryException {
+    public List<UserEntity> getUsersByAccountId(int id) throws RepositoryException {
         try {
 
-        } catch (SQLException e) {
-            throw new DAOException("Error al encontrar los gastos", (SQLException) e);
+        } catch (DataAccessException e) {
+            throw new RepositoryException("Error al encontrar el ususario: " + e.getMessage(), (DataAccessException) e);
         }
         return null;
     }

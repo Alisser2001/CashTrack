@@ -28,9 +28,6 @@ CREATE TABLE IF NOT EXISTS users (
 ALTER TABLE accounts
     ADD CONSTRAINT fkAdminAccount FOREIGN KEY (adminId) REFERENCES users(id);
 
-ALTER TABLE users
-    ADD CONSTRAINT fkAccountUser FOREIGN KEY (account) REFERENCES accounts(id);
-
 CREATE TABLE IF NOT EXISTS expenses (
     id INT NOT NULL AUTO_INCREMENT,
     amount FLOAT,

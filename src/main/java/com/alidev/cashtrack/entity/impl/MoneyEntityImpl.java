@@ -1,7 +1,6 @@
 package com.alidev.cashtrack.entity.impl;
 
 import com.alidev.cashtrack.entity.MoneyEntity;
-
 import java.time.LocalDateTime;
 
 abstract class MoneyEntityImpl implements MoneyEntity {
