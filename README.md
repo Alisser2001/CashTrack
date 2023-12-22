@@ -45,7 +45,7 @@ Por otra lado, gran parte de los endpoints para completar el CRUD de las 4 entid
 ## [Sección 2](#destino)
 ## [Sección 2](#destino)
 
-## Crear un nuevo usuario {#createUser}
+## Crear un nuevo usuario {: #createUser}
 POST /api/v1/users
 
 ### Descripción
