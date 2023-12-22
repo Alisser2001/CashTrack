@@ -41,7 +41,7 @@ public class RevenueMapperImpl implements RevenueMapper {
         revenue.setAmount(revenueDTO.getAmount());
         revenue.setDescription(revenueDTO.getDescription());
         revenue.setType(revenueDTO.getType());
-        revenue.setDateTime(revenueDTO.getDateTime());
+        revenue.setDateTime(LocalDateTime.now());
         revenue.setUserId(revenueDTO.getUserId());
         return revenue;
     }
@@ -68,6 +68,7 @@ public class RevenueMapperImpl implements RevenueMapper {
     public List<RevenueEntity> mapResultSetToRevenuesEntities(ResultSet resultSet) throws RepositoryException {
         try{
             List<RevenueEntity> revenuesEntities = new ArrayList<>();
+            revenuesEntities.add(mapResultSetToRevenueEntity(resultSet));
             while (resultSet.next()) {
                 RevenueEntity revenue = mapResultSetToRevenueEntity(resultSet);
                 revenuesEntities.add(revenue);

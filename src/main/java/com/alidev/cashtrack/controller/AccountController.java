@@ -42,7 +42,7 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.OK).body(account);
     }
 
-    @PutMapping("/acountname")
+    @PutMapping("/accountname")
     public ResponseEntity<String> updateAccountName(@RequestParam int id, @RequestBody AccountRequestDTOImpl account) throws RepositoryException {
         accountService.updateAccountName(id, account);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Nombre de cuenta actualizado con exito");

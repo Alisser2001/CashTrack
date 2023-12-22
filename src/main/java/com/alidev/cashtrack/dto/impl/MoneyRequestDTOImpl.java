@@ -9,15 +9,13 @@ public class MoneyRequestDTOImpl implements MoneyRequestDTO {
     private String type;
     private String description;
     private int userId;
-    private LocalDateTime dateTime;
 
     public MoneyRequestDTOImpl(){};
-    public MoneyRequestDTOImpl(Double amount, String type, String description, int userId, LocalDateTime dateTime){
+    public MoneyRequestDTOImpl(Double amount, String type, String description, int userId){
         this.amount = amount;
         this.type = type;
         this.description = description;
         this.userId = userId;
-        this.dateTime = dateTime;
     }
 
     public Double getAmount() {
@@ -31,8 +29,5 @@ public class MoneyRequestDTOImpl implements MoneyRequestDTO {
     }
     public int getUserId() {
         return userId;
-    }
-    public LocalDateTime getDateTime() {
-        return dateTime;
     }
 }

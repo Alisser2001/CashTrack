@@ -7,5 +7,4 @@ public interface MoneyRequestDTO {
     String getType();
     String getDescription();
     int getUserId();
-    LocalDateTime getDateTime();
 }

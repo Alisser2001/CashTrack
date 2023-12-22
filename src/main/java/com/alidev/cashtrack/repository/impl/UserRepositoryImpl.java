@@ -70,7 +70,7 @@ public class UserRepositoryImpl implements UserRepository {
                     user.getPin(),
                     user.getAccountId());
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el ususario: " + e.getMessage(), (DataAccessException) e);
+            throw new RepositoryException("Error al crear el ususario: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -80,14 +80,14 @@ public class UserRepositoryImpl implements UserRepository {
             String DELETE_USER = String.format(sentences.get_delete_entity_sentence(), "users", "id");
             String DELETE_REVENUES = String.format(sentences.get_delete_entity_sentence(), "revenues", "userId");
             String DELETE_EXPENSES = String.format(sentences.get_delete_entity_sentence(), "expenses", "userId");
-            jdbcTemplate.update(DELETE_USER,
-                    id);
             jdbcTemplate.update(DELETE_REVENUES,
                     id);
             jdbcTemplate.update(DELETE_EXPENSES,
                     id);
+            jdbcTemplate.update(DELETE_USER,
+                    id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el ususario: " + e.getMessage(), (DataAccessException) e);
+            throw new RepositoryException("Error al eliminar el ususario: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -99,7 +99,7 @@ public class UserRepositoryImpl implements UserRepository {
                     username,
                     id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el ususario: " + e.getMessage(), (DataAccessException) e);
+            throw new RepositoryException("Error al actualizar el nombre de ususario: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -111,7 +111,7 @@ public class UserRepositoryImpl implements UserRepository {
                     email,
                     id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el ususario: " + e.getMessage(), (DataAccessException) e);
+            throw new RepositoryException("Error al actualizar el email: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -123,7 +123,7 @@ public class UserRepositoryImpl implements UserRepository {
                     pin,
                     id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el ususario: " + e.getMessage(), (DataAccessException) e);
+            throw new RepositoryException("Error al actualizar el pin: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -135,7 +135,7 @@ public class UserRepositoryImpl implements UserRepository {
                     accId,
                     userId);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el ususario: " + e.getMessage(), (DataAccessException) e);
+            throw new RepositoryException("Error al actualizar la cuenta del usuario: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -144,7 +144,7 @@ public class UserRepositoryImpl implements UserRepository {
         try {
 
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el ususario: " + e.getMessage(), (DataAccessException) e);
+            throw new RepositoryException("Error al encontrar los usuarios: " + e.getMessage(), (DataAccessException) e);
         }
         return null;
     }
