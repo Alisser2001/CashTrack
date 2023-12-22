@@ -5,12 +5,15 @@ Por otra lado, gran parte de los endpoints para completar el CRUD de las 4 entid
 
 # Consideraciones
 - Existen 4 entidades principales en la aplicación: Accounts, Users, Expenses y Revenues.
+- Las categorias definidas para los gastos son: 'automovil', 'casa', 'comida', 'comunicaciones', 'deportes', 'entretenimiento', 'facturas', 'higiene', 'mascotas', 'regalos', 'restaurante', 'ropa', 'salud', 'taxi' y 'transporte'.
+- Las categorias definidas para los ingresos son: 'ahorros', 'depositos', 'regalos' y 'salario'.
 - Cada cuenta tiene un saldo global, además de tener asociados uno o varios usuarios y sus gastos o ingresos, que se ven reflejados en el saldo global de la cuenta.
 - Cada cuenta se protege por contraseña y es sólo administrable por el usuario definido como administrador.
 - Cada usuario y sus transacciones son sólo modificables por el usuario, el cual está protegido por un pin de acceso.
 - Se pueden eliminar las cuentas, esto afectará a todas las transacciones de sus usuarios puesto que se asocian al saldo global, por lo que tambien se eliminan.
 - Al eliminar una cuenta, no se eliminan los usuarios pero sí se desvinculan, haciendo posible vincularlos a otras cuentas o crear la suya propia siendo administrador.
 - Por otro lado, al eliminar un usuario, se eliminarán todas las transacciones asociadas a él, pero esto no afectará el saldo global de la cuenta.
+- Al solicitar algún registro, algunos campos del cuerpo de respuesta pueden venir en "null", esto debido a que se usó una plantilla de respuesta que está pensada para integrarse con otras solicitudes, como por ejemplo el campo "expenses" al traernos un usuario está pensado para integrarse con la solicitud que permite traer los gastos asociados a un usuario.
 - Las rutas para actualizar campos especificos de una entidad toman como cuerpo de la solicitud todos los datos que tiene la entidad, pero sólo toman en cuenta el campo especifico que se quiere actualizar, esto por el momento pues se espera en el futuro poder tomar datos como la contraseña de la cuenta para validar antes de hacer cambios a la entidad.
 
 # Documentación de rutas
