@@ -40,7 +40,7 @@ public class ExpenseMapperImpl implements ExpenseMapper {
         expense.setAmount(expenseDTO.getAmount());
         expense.setDescription(expenseDTO.getDescription());
         expense.setType(expenseDTO.getType());
-        expense.setDateTime(expenseDTO.getDateTime());
+        expense.setDateTime(LocalDateTime.now());
         expense.setUserId(expenseDTO.getUserId());
         return expense;
     }
@@ -67,6 +67,7 @@ public class ExpenseMapperImpl implements ExpenseMapper {
     public List<ExpenseEntity> mapResultSetToExpensesEntities(ResultSet resultSet) throws RepositoryException {
         try{
             List<ExpenseEntity> expensesEntities = new ArrayList<>();
+            expensesEntities.add(mapResultSetToExpenseEntity(resultSet));
             while (resultSet.next()) {
                 ExpenseEntity expense = mapResultSetToExpenseEntity(resultSet);
                 expensesEntities.add(expense);

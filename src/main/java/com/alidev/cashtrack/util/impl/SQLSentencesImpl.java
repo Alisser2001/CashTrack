@@ -12,10 +12,10 @@ public class SQLSentencesImpl implements SQLSentences {
     private static final String DELETE_ACCOUNT_EXPENSES = "DELETE FROM expenses WHERE userId IN (SELECT userId FROM users WHERE account = ?);";
     private static final String DELETE_ACCOUNT_ID_FROM_USERS = "UPDATE users SET account = NULL WHERE account = ?;";
     private static final String UPDATE_VALUE = "UPDATE %s SET %s = ? WHERE %s = ?;";
-    private static final String UPDATE_BALANCE_REMOVE = "UPDATE accounts SET balance = balance - (SELECT amount FROM %s WHERE id = ?) WHERE id = (SELECT accountId FROM users WHERE id = (SELECT userId FROM %s WHERE id = ?));";
-    private static final String UPDATE_BALANCE_ADD = "UPDATE accounts SET balance = balance + (SELECT amount FROM %s WHERE id = ?) WHERE id = (SELECT accountId FROM users WHERE id = (SELECT userId FROM %s WHERE id = ?));";
+    private static final String UPDATE_BALANCE_REMOVE = "UPDATE accounts SET balance = balance - ? WHERE id = ?;";
+    private static final String UPDATE_BALANCE_ADD = "UPDATE accounts SET balance = balance + ? WHERE id = ?;";
     private static final String GET_ALL_FROM_BY = "SELECT * FROM %s WHERE %s = ?;";
-    private static final String GET_ACCOUNT_BALANCE = "SELECT * FROM accounts WHERE id = (SELECT account FROM users WHERE id = ?);";
+    private static final String GET_ACCOUNT_BALANCE = "SELECT balance FROM accounts WHERE id = ?;";
 
     @Override
     public String get_find_all_from_by_sentence() {

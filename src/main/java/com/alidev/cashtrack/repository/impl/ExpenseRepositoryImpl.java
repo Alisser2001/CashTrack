@@ -40,28 +40,16 @@ public class ExpenseRepositoryImpl implements ExpenseRepository {
     @Override
     public void createExpense(ExpenseEntity expense) throws RepositoryException {
         try{
-            String GET_ACCOUNT_BALANCE = sentences.get_account_balance_sentence();
+            String CREATE_EXPENSE = String.format(sentences.get_create_money_sentence(), "expenses");
             Timestamp timestamp = Timestamp.valueOf(expense.getDateTime());
-            Double balance = jdbcTemplate.queryForObject(GET_ACCOUNT_BALANCE, Double.class, expense.getExpenseId());
-            if (balance < expense.getAmount()){
-                throw new ExpenseException("No se poseen fondos suficientes. Saldo: " + balance);
-            } else {
-                String CREATE_EXPENSE = String.format(sentences.get_create_money_sentence(), "expenses");
-                jdbcTemplate.update(CREATE_EXPENSE,
-                        expense.getAmount(),
-                        expense.getDescription(),
-                        expense.getType(),
-                        timestamp,
-                        expense.getUserId());
-                String UPDATE_BALANCE_REMOVE = String.format(sentences.get_update_balance_remove_sentence(), "expenses", "expenses");
-                jdbcTemplate.update(UPDATE_BALANCE_REMOVE,
-                        expense.getExpenseId(),
-                        expense.getExpenseId());
-            }
+            jdbcTemplate.update(CREATE_EXPENSE,
+                    expense.getAmount(),
+                    expense.getDescription(),
+                    expense.getType(),
+                    timestamp,
+                    expense.getUserId());
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el gasto: " + e.getMessage(), (DataAccessException) e);
-        } catch (ExpenseException e) {
-            throw new RuntimeException(e);
+            throw new RepositoryException("Error al registrar el gasto: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -69,14 +57,10 @@ public class ExpenseRepositoryImpl implements ExpenseRepository {
     public void deleteExpense(int id) throws RepositoryException {
         try{
             String DELETE_EXPENSE = String.format(sentences.get_delete_entity_sentence(), "expenses", "id");
-            String UPDATE_BALANCE_ADD = String.format(sentences.get_update_balance_add_sentence(), "expenses", "expenses");
             jdbcTemplate.update(DELETE_EXPENSE,
                     id);
-            jdbcTemplate.update(UPDATE_BALANCE_ADD,
-                    id,
-                    id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el gasto: " + e.getMessage(), (DataAccessException) e);
+            throw new RepositoryException("Error al borrar el gasto: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -88,7 +72,7 @@ public class ExpenseRepositoryImpl implements ExpenseRepository {
                     description,
                     id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el gasto: " + e.getMessage(), (DataAccessException) e);
+            throw new RepositoryException("Error al actualizar la descripcion de gasto: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -100,7 +84,7 @@ public class ExpenseRepositoryImpl implements ExpenseRepository {
                     type,
                     id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el gasto: " + e.getMessage(), (DataAccessException) e);
+            throw new RepositoryException("Error al actualizar el tipo de gasto: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -118,7 +102,7 @@ public class ExpenseRepositoryImpl implements ExpenseRepository {
                     },
                     userId);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el gasto: " + e.getMessage(), (DataAccessException) e);
+            throw new RepositoryException("Error al encontrar los gastos: " + e.getMessage(), (DataAccessException) e);
         }
     }
 

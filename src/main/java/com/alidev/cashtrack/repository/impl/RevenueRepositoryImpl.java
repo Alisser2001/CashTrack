@@ -41,18 +41,15 @@ public class RevenueRepositoryImpl implements RevenueRepository {
         try{
             String CREATE_REVENUE = String.format(sentences.get_create_money_sentence(), "revenues");
             Timestamp timestamp = Timestamp.valueOf(revenue.getDateTime());
-            String UPDATE_BALANCE_ADD = String.format(sentences.get_update_balance_add_sentence(), "revenues", "revenues");
             jdbcTemplate.update(CREATE_REVENUE,
                     revenue.getAmount(),
                     revenue.getDescription(),
                     revenue.getType(),
                     timestamp,
                     revenue.getUserId());
-            jdbcTemplate.update(UPDATE_BALANCE_ADD,
-                    revenue.getRevenueId(),
-                    revenue.getRevenueId());
+
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el ingreso: " + e.getMessage(), (DataAccessException) e);
+            throw new RepositoryException("Error al registrar el ingreso: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -60,14 +57,10 @@ public class RevenueRepositoryImpl implements RevenueRepository {
     public void deleteRevenue(int id) throws RepositoryException {
         try{
             String DELETE_REVENUE = String.format(sentences.get_delete_entity_sentence(), "revenues", "id");
-            String UPDATE_BALANCE_REMOVE = String.format(sentences.get_update_balance_remove_sentence(), "revenues", "revenues");
             jdbcTemplate.update(DELETE_REVENUE,
                     id);
-            jdbcTemplate.update(UPDATE_BALANCE_REMOVE,
-                    id,
-                    id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el ingreso: " + e.getMessage(), (DataAccessException) e);
+            throw new RepositoryException("Error al borrar el ingreso: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -79,7 +72,7 @@ public class RevenueRepositoryImpl implements RevenueRepository {
                     description,
                     id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el ingreso: " + e.getMessage(), (DataAccessException) e);
+            throw new RepositoryException("Error al actualizar la descripción del ingreso: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -91,7 +84,7 @@ public class RevenueRepositoryImpl implements RevenueRepository {
                     type,
                     id);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el ingreso: " + e.getMessage(), (DataAccessException) e);
+            throw new RepositoryException("Error al actualizar el tipo del ingreso: " + e.getMessage(), (DataAccessException) e);
         }
     }
 
@@ -109,7 +102,7 @@ public class RevenueRepositoryImpl implements RevenueRepository {
                     },
                     userId);
         } catch (DataAccessException e) {
-            throw new RepositoryException("Error al encontrar el ingreso: " + e.getMessage(), (DataAccessException) e);
+            throw new RepositoryException("Error al encontrar los ingresos: " + e.getMessage(), (DataAccessException) e);
         }
     }
 

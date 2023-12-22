@@ -1,6 +1,8 @@
 package com.alidev.cashtrack.repository;
 
+import com.alidev.cashtrack.dto.MoneyRequestDTO;
 import com.alidev.cashtrack.entity.AccountEntity;
+import com.alidev.cashtrack.exception.ExpenseException;
 import com.alidev.cashtrack.exception.RepositoryException;
 
 public interface AccountRepository {
@@ -12,4 +14,6 @@ public interface AccountRepository {
     void updateAdminId(int accId, int id) throws RepositoryException;
     void updateDescription(int id, String description) throws RepositoryException;
     void updatePassword(int id, String password) throws RepositoryException;
+    void addMoney(int account, Double amount) throws RepositoryException;
+    void removeMoney(int account, Double amount) throws ExpenseException, RepositoryException;
 }

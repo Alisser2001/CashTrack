@@ -3,6 +3,7 @@ package com.alidev.cashtrack.service.impl;
 import com.alidev.cashtrack.dto.AccountRequestDTO;
 import com.alidev.cashtrack.dto.AccountResponseDTO;
 import com.alidev.cashtrack.entity.AccountEntity;
+import com.alidev.cashtrack.exception.ExpenseException;
 import com.alidev.cashtrack.exception.RepositoryException;
 import com.alidev.cashtrack.repository.AccountRepository;
 import com.alidev.cashtrack.service.AccountService;
@@ -59,5 +60,15 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void updatePassword(int id, AccountRequestDTO account) throws RepositoryException {
         accountRepository.updatePassword(id, account.getPassword());
+    }
+
+    @Override
+    public void addMoney(int account, Double amount) throws ExpenseException, RepositoryException {
+        accountRepository.addMoney(account, amount);
+    }
+
+    @Override
+    public void removeMoney(int account, Double amount) throws ExpenseException, RepositoryException {
+        accountRepository.removeMoney(account, amount);
     }
 }

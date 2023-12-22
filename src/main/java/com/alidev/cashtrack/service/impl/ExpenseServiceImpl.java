@@ -46,7 +46,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public void updateType(int id, MoneyRequestDTO money) throws RepositoryException {
-        expenseRepository.updateDescription(id, money.getType());
+        expenseRepository.updateType(id, money.getType());
     }
 
     @Override
