@@ -277,6 +277,7 @@ Actualizar el usuario administrador de una cuenta.
     "balance": 0.0
 }
 ```
+
 ## Actualizar descripción de cuenta
 UPDATE /api/v1/accounts/description?id={id}
 
@@ -303,6 +304,7 @@ Actualizar la descripción de una cuenta.
     "balance": 0.0
 }
 ```
+
 ## Actualizar contraseña
 UPDATE /api/v1/accounts/password?id={id}
 
@@ -320,6 +322,7 @@ Actualizar la contraseña de una cuenta.
 - `balance` (double): El saldo de la cuenta. 
 
 ### Cuerpo de la solicitud
+```json
 {
     "adminId": 1,
     "description": "Cuenta ejemplo",
@@ -327,6 +330,7 @@ Actualizar la contraseña de una cuenta.
     "password": "Nueva contraseña",
     "balance": 0.0
 }
+```
 
 ## Actualizar cuenta del usuario
 UPDATE /api/v1/users/account?id={id}
@@ -344,12 +348,13 @@ Actualizar la cuenta asociada a un usuario.
 - `pin` (string): El PIN de seguridad del usuario.
 
 ### Cuerpo de la solicitud
-{
+```json{
     "username": "Ejemplo",
     "email": "ejemplo@gmail.com",
     "accountId": 1,
     "pin": "12345"
 }
+```
 
 ## Actualizar nombre de usuario
 UPDATE /api/v1/users/username?id={id}
@@ -367,12 +372,13 @@ Actualizar el nombre de usuario.
 - `pin` (string): El PIN de seguridad del usuario.
 
 ### Cuerpo de la solicitud
-{
+```json{
     "username": "Nuevo username",
     "email": "ejemplo@gmail.com",
     "accountId": 1,
     "pin": "12345"
 }
+```
 
 ## Actualizar email
 UPDATE /api/v1/users/email?id={id}
@@ -398,6 +404,7 @@ Actualizar el email asociado al usuario.
     "pin": "12345"
 }
 ```
+
 ## Actualizar PIN
 UPDATE /api/v1/users/pin?id={id}
 
@@ -414,12 +421,13 @@ Actualizar el PIN de seguridad de un usuario.
 - `pin` (string): Nuevo PIN de seguridad del usuario.
 
 ### Cuerpo de la solicitud
-{
+```json{
     "username": "Ejemplo",
     "email": "ejemplo@gmail.com",
     "accountId": 1,
     "pin": "Nuevo PIN"
 }
+```
 
 ## Actualizar descripción de gasto
 UPDATE /api/v1/expenses/description?id={id}
@@ -437,12 +445,13 @@ Actualizar la descripción de un gasto.
 - `userId` (int): ID único del usuario que realizó el gasto.
 
 ### Cuerpo de la solicitud
-{
+```json{
     "amount": 20000,
     "type": "ejemplo",
     "description": "Nueva descripción del gasto",
     "userId": 1
 }
+```
 
 ## Actualizar tipo de gasto
 UPDATE /api/v1/expenses/type?id={id}
@@ -460,12 +469,13 @@ Actualizar la categoria de un gasto.
 - `userId` (int): ID único del usuario que realizó el gasto.
 
 ### Cuerpo de la solicitud
-{
+```json{
     "amount": 20000,
     "type": "nuevo tipo de gasto",
     "description": "Gasto de ejemplo",
     "userId": 1
 }
+```
 
 ## Actualizar descripción de ingreso
 UPDATE /api/v1/revenues/description?id={id}
@@ -483,12 +493,13 @@ Actualizar la descripción de un ingreso.
 - `userId` (int): ID único del usuario que realizó el ingreso.
 
 ### Cuerpo de la solicitud
-{
+```json{
     "amount": 20000,
     "type": "ejemplo",
     "description": "Nueva descripción de ingreso",
     "userId": 1
 }
+```
 
 ## Actualizar tipo de ingreso
 UPDATE /api/v1/revenues/type?id={id}
@@ -506,10 +517,10 @@ Actualizar la categoria de un ingreso.
 - `userId` (int): ID único del usuario que realizó el ingreso.
 
 ### Cuerpo de la solicitud
-{
+```json{
     "amount": 20000,
     "type": "nuevo tipo de ingreso",
     "description": "Gasto de ejemplo",
     "userId": 1
 }
-  
+```  
