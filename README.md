@@ -15,6 +15,25 @@ API Rest pensada como servidor para aplicaciones de gestión de gastos personale
 ## Crear un nuevo usuario
 POST /api/v1/users
 
+### Descripción
+Crea un nuevo usuario en el sistema.
+
+### Parámetros del Cuerpo
+- `username` (string): El nombre del usuario.
+- `email` (string): La dirección de correo electrónico del usuario.
+- `accountId` (string): La cuenta a la que pertenece al usuario (puede ser null mientras se crea y asigna la cuenta).
+- `pin` (string): El pin de seguridad del usuario.
+
+### Cuerpo de la solicitud
+```json
+{
+    "username": "alidev",
+    "email": "estiven25b777@gmail.com",
+    "accountId": null,
+    "pin": "12345"
+}
+```
+
 ## Crear una nueva cuenta
 POST /api/v1/accounts
 
