@@ -51,6 +51,7 @@ GET /api/v1/revenues/user?user={userId}
 
 ## Actualizar nombre de cuenta
 UPDATE /api/v1/accounts/accountname?id={id}
+### Body de la solicitud
 {
     "adminId": 1,
     "description": "Cuenta ejemplo",
@@ -60,6 +61,7 @@ UPDATE /api/v1/accounts/accountname?id={id}
 }
 ## Actualizar administrador de cuenta
 UPDATE /api/v1/accounts/admin?id={id}
+### Body de la solicitud
 {
     "adminId": 1,
     "description": "Cuenta ejemplo",
@@ -69,6 +71,7 @@ UPDATE /api/v1/accounts/admin?id={id}
 }
 ## Actualizar descripción de cuenta
 UPDATE /api/v1/accounts/description?id={id}
+### Body de la solicitud
 {
     "adminId": 1,
     "description": "Nueva descripción de cuenta",
@@ -78,6 +81,7 @@ UPDATE /api/v1/accounts/description?id={id}
 }
 ## Actualizar contraseña
 UPDATE /api/v1/accounts/password?id={id}
+### Body de la solicitud
 {
     "adminId": 1,
     "description": "Cuenta ejemplo",
@@ -87,6 +91,7 @@ UPDATE /api/v1/accounts/password?id={id}
 }
 ## Actualizar cuenta del usuario
 UPDATE /api/v1/users/account?id={id}
+### Body de la solicitud
 {
     "username": "Ejemplo",
     "email": "ejemplo@gmail.com",
@@ -95,6 +100,7 @@ UPDATE /api/v1/users/account?id={id}
 }
 ## Actualizar nombre de usuario
 UPDATE /api/v1/users/username?id={id}
+### Body de la solicitud
 {
     "username": "Nuevo username",
     "email": "ejemplo@gmail.com",
@@ -103,6 +109,7 @@ UPDATE /api/v1/users/username?id={id}
 }
 ## Actualizar email
 UPDATE /api/v1/users/email?id={id}
+### Body de la solicitud
 {
     "username": "Ejemplo",
     "email": "nuevoEmail@gmail.com",
@@ -111,6 +118,7 @@ UPDATE /api/v1/users/email?id={id}
 }
 ## Actualizar PIN
 UPDATE /api/v1/users/pin?id={id}
+### Body de la solicitud
 {
     "username": "Ejemplo",
     "email": "ejemplo@gmail.com",
@@ -119,6 +127,7 @@ UPDATE /api/v1/users/pin?id={id}
 }
 ## Actualizar descripción de gasto
 UPDATE /api/v1/expenses/description?id={id}
+### Body de la solicitud
 {
     "amount": 20000,
     "type": "ejemplo",
@@ -127,6 +136,7 @@ UPDATE /api/v1/expenses/description?id={id}
 }
 ## Actualizar tipo de gasto
 UPDATE /api/v1/expenses/type?id={id}
+### Body de la solicitud
 {
     "amount": 20000,
     "type": "nuevo tipo de gasto",
@@ -135,6 +145,7 @@ UPDATE /api/v1/expenses/type?id={id}
 }
 ## Actualizar descripción de ingreso
 UPDATE /api/v1/revenues/description?id={id}
+### Body de la solicitud
 {
     "amount": 20000,
     "type": "ejemplo",
@@ -143,6 +154,7 @@ UPDATE /api/v1/revenues/description?id={id}
 }
 ## Actualizar tipo de ingreso
 UPDATE /api/v1/revenues/type?id={id}
+### Body de la solicitud
 {
     "amount": 20000,
     "type": "nuevo tipo de ingreso",
