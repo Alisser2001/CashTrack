@@ -14,44 +14,60 @@ API Rest pensada como servidor para aplicaciones de gestión de gastos personale
 
 ## Crear un nuevo usuario
 POST /api/v1/users
+
 ## Crear una nueva cuenta
 POST /api/v1/accounts
+
 ## Crear un nuevo gasto
 POST /api/v1/expenses
+
 ## Crear un nuevo ingreso
 POST /api/v1/revenues
 
 ## Eliminar una cuenta
 DELETE /api/v1/accounts?id={id}
+
 ## Eliminar un usuario
 DELETE /api/v1/users?id={id}
+
 ## Eliminar un gasto reciente
 DELETE /api/v1/expenses?account={accountId}&id={id}
+
 ## Eliminar un ingreso reciente
 DELETE /api/v1/revenues?account={accountId}&id={id}
 
 ## Obtener cuenta por id
 GET /api/v1/accounts/id?id={id}
+
 ## Obtener cuenta por id de administrador
 GET /api/v1/accounts/admin?admin={adminId}
+
 ## Obtener usuario por id
 GET /api/v1/users/id?id={id}
+
 ## Obtener usuario por email
 GET /api/v1/users/email?email={email}
+
 ## Obtener usuario por nombre de usuario
 GET /api/v1/users/username?username={username}
+
 ## Obtener gasto por id
 GET /api/v1/expenses/id?id={id}
+
 ## Obtener gastos por id de usuario
 GET /api/v1/expenses/user?user={userId}
+
 ## Obtener ingresos por id
 GET /api/v1/revenues/id?id={id}
+
 ## Obtener ingresos por id de usuario
 GET /api/v1/revenues/user?user={userId}
 
 ## Actualizar nombre de cuenta
 UPDATE /api/v1/accounts/accountname?id={id}
+
 ### Body de la solicitud
+```json
 {
     "adminId": 1,
     "description": "Cuenta ejemplo",
@@ -59,9 +75,13 @@ UPDATE /api/v1/accounts/accountname?id={id}
     "password": "12345",
     "balance": 0.0
 }
+```
+
 ## Actualizar administrador de cuenta
 UPDATE /api/v1/accounts/admin?id={id}
+
 ### Body de la solicitud
+```json
 {
     "adminId": 1,
     "description": "Cuenta ejemplo",
@@ -69,9 +89,12 @@ UPDATE /api/v1/accounts/admin?id={id}
     "password": "12345",
     "balance": 0.0
 }
+```
 ## Actualizar descripción de cuenta
 UPDATE /api/v1/accounts/description?id={id}
+
 ### Body de la solicitud
+```json
 {
     "adminId": 1,
     "description": "Nueva descripción de cuenta",
@@ -79,8 +102,10 @@ UPDATE /api/v1/accounts/description?id={id}
     "password": "12345",
     "balance": 0.0
 }
+```
 ## Actualizar contraseña
 UPDATE /api/v1/accounts/password?id={id}
+
 ### Body de la solicitud
 {
     "adminId": 1,
@@ -89,8 +114,10 @@ UPDATE /api/v1/accounts/password?id={id}
     "password": "Nueva contraseña",
     "balance": 0.0
 }
+
 ## Actualizar cuenta del usuario
 UPDATE /api/v1/users/account?id={id}
+
 ### Body de la solicitud
 {
     "username": "Ejemplo",
@@ -98,8 +125,10 @@ UPDATE /api/v1/users/account?id={id}
     "accountId": 1,
     "pin": "12345"
 }
+
 ## Actualizar nombre de usuario
 UPDATE /api/v1/users/username?id={id}
+
 ### Body de la solicitud
 {
     "username": "Nuevo username",
@@ -109,13 +138,16 @@ UPDATE /api/v1/users/username?id={id}
 }
 ## Actualizar email
 UPDATE /api/v1/users/email?id={id}
+
 ### Body de la solicitud
+```json
 {
     "username": "Ejemplo",
     "email": "nuevoEmail@gmail.com",
     "accountId": 1,
     "pin": "12345"
 }
+```
 ## Actualizar PIN
 UPDATE /api/v1/users/pin?id={id}
 ### Body de la solicitud
