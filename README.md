@@ -37,23 +37,108 @@ Crea un nuevo usuario en el sistema.
 ## Crear una nueva cuenta
 POST /api/v1/accounts
 
+### Descripción
+Crea una nueva cuenta en el sistema.
+
+### Parámetros del Cuerpo
+- `adminId` (int): El id del usuario administrador de la cuenta (no puede ser null).
+- `description` (string): La descripción de la cuenta.
+- `accountName` (string): El nombre para la cuenta.
+- `password` (string): La contraseña para la cuenta.
+- `balance` (double): El saldo inicial al crear la cuenta
+
+### Cuerpo de la solicitud
+```json
+{
+    "adminId": 1,
+    "description": "Cuenta de gastos alidev",
+    "accountName": "AlidevCash",
+    "password": "12345",
+    "balance": 0.0
+}
+```
+
 ## Crear un nuevo gasto
 POST /api/v1/expenses
+
+### Descripción
+Crea un nuevo gasto en el sistema.
+
+### Parámetros del Cuerpo
+- `amount` (double): La cantidad del gasto.
+- `type` (string): La categoria del gasto.
+- `description` (string): La descripción del gasto.
+- `userId` (int): El id del usuario que realiza el gasto en la cuenta.
+
+### Cuerpo de la solicitud
+```json
+{
+    "amount": 20000,
+    "type": "casa",
+    "description": "Cuchara para huevos",
+    "userId": 1
+}
+```
 
 ## Crear un nuevo ingreso
 POST /api/v1/revenues
 
+### Descripción
+Crea un nuevo ingreso en el sistema.
+
+### Parámetros del Cuerpo
+- `amount` (double): La cantidad del ingreso.
+- `type` (string): La categoria del ingreso.
+- `description` (string): La descripción del ingreso.
+- `userId` (int): El id del usuario que realiza el ingreso en la cuenta.
+
+### Cuerpo de la solicitud
+```json
+{
+    "amount": 20000,
+    "type": "casa",
+    "description": "Cuchara para huevos",
+    "userId": 1
+}
+```
+
 ## Eliminar una cuenta
 DELETE /api/v1/accounts?id={id}
+
+### Descripción
+Eliminar una cuenta del sistema y sus transacciones asociadas.
+
+### Parámetros de Ruta
+- `id` (int): ID único de la cuenta.
 
 ## Eliminar un usuario
 DELETE /api/v1/users?id={id}
 
+### Descripción
+Eliminar una usuario del sistema y sus transacciones asociadas.
+
+### Parámetros de Ruta
+- `id` (int): ID único del usuario.
+
 ## Eliminar un gasto reciente
 DELETE /api/v1/expenses?account={accountId}&id={id}
 
+### Descripción
+Eliminar un gasto que se haya registrado recientemente para no afectar el historial del saldo.
+
+### Parámetros de Ruta
+- `id` (int): ID único del gasto.
+- `account` (int): ID único de la cuenta asociada al gasto.
+
 ## Eliminar un ingreso reciente
 DELETE /api/v1/revenues?account={accountId}&id={id}
+
+### Descripción
+Eliminar un ingreso que se haya registrado recientemente para no afectar el historial del saldo.
+
+### Parámetros de Ruta
+- `id` (int): ID único del ingreso.
+- `account` (int): ID único de la cuenta asociada al ingreso.
 
 ## Obtener cuenta por id
 GET /api/v1/accounts/id?id={id}
