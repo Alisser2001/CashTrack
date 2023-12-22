@@ -15,7 +15,37 @@ Por otra lado, gran parte de los endpoints para completar el CRUD de las 4 entid
 
 # Documentación de rutas
 
-## Crear un nuevo usuario
+## [Crear usuario](#createUser)
+## [Crear cuenta](#createAccount)
+## [Crear gasto](#createExpense)
+## [Crear ingreso](#createRevenue)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+## [Sección 2](#destino)
+
+## Crear un nuevo usuario <a name="createUser"></a>
 POST /api/v1/users
 
 ### Descripción
@@ -37,7 +67,7 @@ Crea un nuevo usuario en el sistema.
 }
 ```
 
-## Crear una nueva cuenta
+## Crear una nueva cuenta <a name="createAccount"></a>
 POST /api/v1/accounts
 
 ### Descripción
@@ -61,7 +91,7 @@ Crea una nueva cuenta en el sistema.
 }
 ```
 
-## Crear un nuevo gasto
+## Crear un nuevo gasto <a name="createExpense"></a>
 POST /api/v1/expenses
 
 ### Descripción
@@ -83,7 +113,7 @@ Crea un nuevo gasto en el sistema.
 }
 ```
 
-## Crear un nuevo ingreso
+## Crear un nuevo ingreso <a name="createRevenue"></a>
 POST /api/v1/revenues
 
 ### Descripción
