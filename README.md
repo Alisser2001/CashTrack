@@ -348,7 +348,8 @@ Actualizar la cuenta asociada a un usuario.
 - `pin` (string): El PIN de seguridad del usuario.
 
 ### Cuerpo de la solicitud
-```json{
+```json
+{
     "username": "Ejemplo",
     "email": "ejemplo@gmail.com",
     "accountId": 1,
@@ -372,7 +373,8 @@ Actualizar el nombre de usuario.
 - `pin` (string): El PIN de seguridad del usuario.
 
 ### Cuerpo de la solicitud
-```json{
+```json
+{
     "username": "Nuevo username",
     "email": "ejemplo@gmail.com",
     "accountId": 1,
@@ -421,7 +423,8 @@ Actualizar el PIN de seguridad de un usuario.
 - `pin` (string): Nuevo PIN de seguridad del usuario.
 
 ### Cuerpo de la solicitud
-```json{
+```json
+{
     "username": "Ejemplo",
     "email": "ejemplo@gmail.com",
     "accountId": 1,
@@ -445,7 +448,8 @@ Actualizar la descripción de un gasto.
 - `userId` (int): ID único del usuario que realizó el gasto.
 
 ### Cuerpo de la solicitud
-```json{
+```json
+{
     "amount": 20000,
     "type": "ejemplo",
     "description": "Nueva descripción del gasto",
@@ -469,7 +473,8 @@ Actualizar la categoria de un gasto.
 - `userId` (int): ID único del usuario que realizó el gasto.
 
 ### Cuerpo de la solicitud
-```json{
+```json
+{
     "amount": 20000,
     "type": "nuevo tipo de gasto",
     "description": "Gasto de ejemplo",
@@ -493,7 +498,8 @@ Actualizar la descripción de un ingreso.
 - `userId` (int): ID único del usuario que realizó el ingreso.
 
 ### Cuerpo de la solicitud
-```json{
+```json
+{
     "amount": 20000,
     "type": "ejemplo",
     "description": "Nueva descripción de ingreso",
@@ -517,7 +523,8 @@ Actualizar la categoria de un ingreso.
 - `userId` (int): ID único del usuario que realizó el ingreso.
 
 ### Cuerpo de la solicitud
-```json{
+```json
+{
     "amount": 20000,
     "type": "nuevo tipo de ingreso",
     "description": "Gasto de ejemplo",
